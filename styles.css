@@ -2152,3 +2152,26 @@ footer a {
   .registration-only-page .brand-copy strong { max-width: 145px; }
   .registration-only-page .form-card { padding: 22px 15px 32px; }
 }
+
+/* Shared navy navigation for the public landing page. */
+.public-page .site-header {
+  color: var(--white);
+  background:
+    radial-gradient(circle at 15% 5%, rgba(61, 102, 166, 0.42), transparent 32%),
+    linear-gradient(165deg, #172b50 0%, #0f1d38 48%, #081326 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 7px 24px rgba(6, 16, 34, 0.18);
+}
+
+.public-page .brand-copy strong { color: var(--white); }
+.public-page .brand-copy small { color: rgba(255, 255, 255, 0.58); }
+
+@media (max-width: 640px) {
+  .public-page .site-header {
+    background:
+      radial-gradient(circle at 15% 5%, rgba(61, 102, 166, 0.42), transparent 32%),
+      linear-gradient(165deg, #172b50 0%, #0f1d38 48%, #081326 100%);
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 7px 24px rgba(6, 16, 34, 0.2);
+  }
+}
