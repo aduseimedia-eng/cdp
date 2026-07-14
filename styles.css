@@ -1612,6 +1612,61 @@ footer p { font-size: 10px; }
   .brand-copy small { font-size: 7px; }
 }
 
+/* Closed registration becomes a focused, standalone notice. */
+body.registration-is-closed { background: #0d1d3b; }
+
+body.registration-is-closed .site-header,
+body.registration-is-closed footer,
+body.registration-is-closed .registration-aside,
+body.registration-is-closed .mobile-register-button,
+body.registration-is-closed .registration-page-heading { display: none; }
+
+body.registration-is-closed .registration-section {
+  min-height: 100vh;
+  padding: 32px 20px;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(67, 120, 195, .34), transparent 30%),
+    linear-gradient(145deg, #17325f 0%, #0d1d3b 55%, #071326 100%);
+}
+
+body.registration-is-closed .registration-grid,
+body.registration-is-closed .registration-only-shell {
+  width: min(620px, 100%);
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+body.registration-is-closed .registration-grid { display: block; }
+
+body.registration-is-closed .form-card,
+body.registration-is-closed .registration-only-page .form-card {
+  width: 100%;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  background: var(--white);
+  border: 1px solid rgba(255, 255, 255, .8);
+  border-radius: 18px;
+  box-shadow: 0 24px 60px rgba(3, 12, 28, .28);
+}
+
+body.registration-is-closed .closed-state { padding: 58px 30px; }
+
+@media (max-width: 640px) {
+  body.registration-is-closed .registration-section { min-height: 100vh; padding: 18px; }
+  body.registration-is-closed .registration-grid,
+  body.registration-is-closed .registration-only-shell { width: 100%; }
+  body.registration-is-closed .form-card,
+  body.registration-is-closed .registration-only-page .form-card { display: block; border-radius: 16px; }
+  body.registration-is-closed .closed-state { padding: 48px 20px; }
+  body.registration-is-closed .closed-state h2 { font-size: 24px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
