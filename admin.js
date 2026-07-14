@@ -440,6 +440,7 @@ function renderRegistrations(searchTerm = '') {
     const row = document.createElement('tr');
     const participant = document.createElement('td');
     participant.className = 'participant-cell';
+    participant.dataset.label = 'Participant';
     const participantName = document.createElement('strong');
     participantName.textContent = displayName(item);
     const participantEmail = document.createElement('small');
@@ -447,19 +448,25 @@ function renderRegistrations(searchTerm = '') {
     participant.append(participantName, participantEmail);
 
     const whatsapp = document.createElement('td');
+    whatsapp.dataset.label = 'WhatsApp';
     whatsapp.textContent = `+233 ${item.whatsapp}`;
 
     const transaction = document.createElement('td');
-    transaction.textContent = item.transactionId;
+    transaction.dataset.label = 'Transaction';
+    const transactionId = document.createElement('span');
+    transactionId.className = 'transaction-id';
+    transactionId.textContent = item.transactionId;
     const reference = document.createElement('span');
     reference.className = 'reference-text';
     reference.textContent = item.reference;
-    transaction.append(reference);
+    transaction.append(transactionId, reference);
 
     const submitted = document.createElement('td');
+    submitted.dataset.label = 'Submitted';
     submitted.textContent = new Intl.DateTimeFormat('en-GH', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(item.submittedAt));
 
     const statusCell = document.createElement('td');
+    statusCell.dataset.label = 'Status';
     const select = document.createElement('select');
     select.className = `status-select ${item.status === 'Verified' ? 'verified' : ''}`;
     select.setAttribute('aria-label', `Status for ${displayName(item)}`);
@@ -474,6 +481,7 @@ function renderRegistrations(searchTerm = '') {
     statusCell.append(select);
 
     const actions = document.createElement('td');
+    actions.dataset.label = 'Actions';
     const deleteButton = document.createElement('button');
     deleteButton.className = 'delete-registration-button';
     deleteButton.type = 'button';
