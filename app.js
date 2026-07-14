@@ -46,6 +46,103 @@ const DEFAULT_CONFIG = {
 };
 
 let currentStep = 1;
+let activeMobileSelect = null;
+let mobileSelectTrigger = null;
+
+const mobileSelectionSheet = document.createElement('div');
+mobileSelectionSheet.className = 'selection-sheet';
+mobileSelectionSheet.hidden = true;
+mobileSelectionSheet.innerHTML = `
+  <div class="selection-sheet-backdrop" data-close-selection-sheet></div>
+  <section class="selection-sheet-panel" role="dialog" aria-modal="true" aria-labelledby="selectionSheetTitle">
+    <div class="selection-sheet-handle" aria-hidden="true"></div>
+    <div class="selection-sheet-heading"><div><span class="step-label">Make a selection</span><h2 id="selectionSheetTitle">Choose an option</h2></div><button class="selection-sheet-close" type="button" data-close-selection-sheet aria-label="Close selection menu">×</button></div>
+    <div class="selection-sheet-options" id="selectionSheetOptions" role="listbox"></div>
+    <button class="selection-sheet-cancel" type="button" data-close-selection-sheet>Cancel</button>
+  </section>`;
+document.body.append(mobileSelectionSheet);
+
+const selectionSheetTitle = mobileSelectionSheet.querySelector('#selectionSheetTitle');
+const selectionSheetOptions = mobileSelectionSheet.querySelector('#selectionSheetOptions');
+
+function isMobileSelectionView() {
+  return window.matchMedia('(max-width: 640px)').matches;
+}
+
+function closeMobileSelectionSheet({ returnFocus = true } = {}) {
+  if (mobileSelectionSheet.hidden) return;
+  mobileSelectionSheet.hidden = true;
+  document.body.classList.remove('selection-sheet-open');
+  const trigger = mobileSelectTrigger;
+  activeMobileSelect = null;
+  mobileSelectTrigger = null;
+  if (returnFocus && trigger?.isConnected) trigger.focus({ preventScroll: true });
+}
+
+function selectMobileOption(option) {
+  if (!activeMobileSelect) return;
+  activeMobileSelect.value = option.value;
+  activeMobileSelect.dispatchEvent(new Event('input', { bubbles: true }));
+  activeMobileSelect.dispatchEvent(new Event('change', { bubbles: true }));
+  closeMobileSelectionSheet();
+}
+
+function openMobileSelectionSheet(select) {
+  const field = select.closest('.field');
+  const label = field?.querySelector('span')?.textContent.replace(/\*/g, '').trim() || 'Choose an option';
+  const options = [...select.options].filter((option) => option.value || select.name === 'title');
+  if (!options.length) return;
+
+  activeMobileSelect = select;
+  mobileSelectTrigger = select;
+  selectionSheetTitle.textContent = label;
+  selectionSheetOptions.replaceChildren();
+
+  options.forEach((option) => {
+    const button = document.createElement('button');
+    button.className = 'selection-sheet-option';
+    button.type = 'button';
+    button.setAttribute('role', 'option');
+    button.setAttribute('aria-selected', String(option.selected));
+    if (option.selected) button.classList.add('selected');
+
+    const optionText = document.createElement('span');
+    optionText.textContent = option.textContent;
+    const check = document.createElement('span');
+    check.className = 'selection-sheet-check';
+    check.setAttribute('aria-hidden', 'true');
+    check.textContent = '✓';
+    button.append(optionText, check);
+    button.addEventListener('click', () => selectMobileOption(option));
+    selectionSheetOptions.append(button);
+  });
+
+  mobileSelectionSheet.hidden = false;
+  document.body.classList.add('selection-sheet-open');
+  const selectedOption = selectionSheetOptions.querySelector('.selected') || selectionSheetOptions.querySelector('button');
+  selectedOption?.focus({ preventScroll: true });
+}
+
+form.querySelectorAll('select').forEach((select) => {
+  select.addEventListener('pointerdown', (event) => {
+    if (!isMobileSelectionView()) return;
+    event.preventDefault();
+    openMobileSelectionSheet(select);
+  });
+  select.addEventListener('keydown', (event) => {
+    if (!isMobileSelectionView() || !['Enter', ' ', 'ArrowDown'].includes(event.key)) return;
+    event.preventDefault();
+    openMobileSelectionSheet(select);
+  });
+});
+
+mobileSelectionSheet.querySelectorAll('[data-close-selection-sheet]').forEach((button) => {
+  button.addEventListener('click', () => closeMobileSelectionSheet());
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') closeMobileSelectionSheet();
+});
 
 function showToast(message) {
   toast.textContent = message;

@@ -1612,6 +1612,55 @@ footer p { font-size: 10px; }
   .brand-copy small { font-size: 7px; }
 }
 
+/* Touch-friendly mobile selection sheet for registration dropdowns. */
+body.selection-sheet-open { overflow: hidden; }
+
+.selection-sheet { position: fixed; inset: 0; z-index: 40; display: grid; align-items: end; }
+
+.selection-sheet[hidden] { display: none; }
+
+.selection-sheet-backdrop { position: absolute; inset: 0; background: rgba(5, 16, 34, .58); backdrop-filter: blur(4px); animation: selection-backdrop-in .18s ease; }
+
+.selection-sheet-panel { position: relative; width: min(620px, 100%); max-height: min(74vh, 620px); display: flex; flex-direction: column; margin-inline: auto; padding: 11px 18px calc(18px + env(safe-area-inset-bottom)); overflow: hidden; background: var(--white); border-radius: 24px 24px 0 0; box-shadow: 0 -16px 48px rgba(4, 13, 29, .22); animation: selection-sheet-in .24s ease; }
+
+.selection-sheet-handle { width: 42px; height: 4px; flex: 0 0 auto; margin: 0 auto 15px; background: #d8dde5; border-radius: 99px; }
+
+.selection-sheet-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding-bottom: 15px; border-bottom: 1px solid var(--line); }
+
+.selection-sheet-heading .step-label { color: var(--coral); }
+
+.selection-sheet-heading h2 { margin: 5px 0 0; color: var(--ink); font-size: 22px; line-height: 1.2; letter-spacing: -.035em; }
+
+.selection-sheet-close { width: 39px; height: 39px; display: grid; flex: 0 0 auto; padding: 0; place-items: center; color: #526074; background: #f2f4f7; border: 1px solid #e1e6ec; border-radius: 50%; font-size: 24px; line-height: 1; cursor: pointer; }
+
+.selection-sheet-options { display: grid; gap: 9px; padding: 16px 0; overflow-y: auto; overscroll-behavior: contain; }
+
+.selection-sheet-option { width: 100%; min-height: 54px; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 12px 14px; color: var(--ink); background: #f6f7f9; border: 1px solid #e5e8ed; border-radius: 12px; font-size: 15px; font-weight: 600; line-height: 1.3; text-align: left; cursor: pointer; transition: .18s ease; }
+
+.selection-sheet-option:hover,
+.selection-sheet-option:focus-visible { border-color: #a8d8f5; background: #edf8ff; outline: none; }
+
+.selection-sheet-option.selected { color: #0d63a5; background: #e8f6ff; border-color: #69b9e9; box-shadow: inset 0 0 0 1px rgba(22, 121, 196, .1); }
+
+.selection-sheet-check { width: 24px; height: 24px; display: grid; flex: 0 0 auto; place-items: center; color: transparent; background: var(--white); border: 1px solid #d5dce5; border-radius: 50%; font-size: 13px; font-weight: 800; }
+
+.selection-sheet-option.selected .selection-sheet-check { color: var(--white); background: #1679c4; border-color: #1679c4; }
+
+.selection-sheet-cancel { width: 100%; min-height: 48px; flex: 0 0 auto; color: #253452; background: transparent; border: 0; border-top: 1px solid var(--line); font-size: 14px; font-weight: 700; cursor: pointer; }
+
+@keyframes selection-backdrop-in { from { opacity: 0; } }
+@keyframes selection-sheet-in { from { opacity: 0; transform: translateY(24px); } }
+
+@media (min-width: 641px) {
+  .selection-sheet { display: none !important; }
+}
+
+@media (max-width: 380px) {
+  .selection-sheet-panel { padding-inline: 14px; border-radius: 20px 20px 0 0; }
+  .selection-sheet-heading h2 { font-size: 20px; }
+  .selection-sheet-option { min-height: 51px; font-size: 14px; }
+}
+
 /* Closed registration becomes a focused, standalone notice. */
 body.registration-is-closed { background: #0d1d3b; }
 
