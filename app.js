@@ -14,7 +14,6 @@ const receiptInput = document.querySelector('#receipt');
 const uploadLabel = document.querySelector('#uploadLabel');
 const fileError = document.querySelector('#fileError');
 const closedState = document.querySelector('#closedState');
-const mobileRegisterButton = document.querySelector('#mobileRegisterButton');
 
 const CONFIG_KEY = 'iodCdpConfig';
 const REGISTRATIONS_KEY = 'iodCdpRegistrations';
@@ -98,14 +97,6 @@ function setStep(stepNumber) {
 
 continueButton.addEventListener('click', () => {
   if (validateStep(1)) setStep(2);
-});
-
-mobileRegisterButton.addEventListener('click', () => {
-  document.body.classList.add('mobile-form-open');
-  mobileRegisterButton.setAttribute('aria-expanded', 'true');
-  window.requestAnimationFrame(() => {
-    document.querySelector('#registrationFormCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
 });
 
 backButton.addEventListener('click', () => setStep(1));
@@ -234,15 +225,18 @@ function applyPublicConfig() {
   setText('#paymentAmount', formatGhs(config.paymentAmount));
   updatePaymentDisplay(config, form.elements.network.value);
 
-  document.querySelector('#posterCard').hidden = !config.showPoster;
-  document.querySelector('#eventMeta').hidden = !config.showEventDetails;
-  document.querySelector('#priceLine').hidden = !config.showFee;
+  const posterCard = document.querySelector('#posterCard');
+  const eventMeta = document.querySelector('#eventMeta');
+  const priceLine = document.querySelector('#priceLine');
+  if (posterCard) posterCard.hidden = !config.showPoster;
+  if (eventMeta) eventMeta.hidden = !config.showEventDetails;
+  if (priceLine) priceLine.hidden = !config.showFee;
 
-  if (config.posterDataUrl) {
+  if (programPoster && config.posterDataUrl) {
     programPoster.src = config.posterDataUrl;
     programPoster.hidden = false;
     posterPlaceholder.hidden = true;
-  } else {
+  } else if (programPoster) {
     if (!programPoster.src.endsWith('/assets/cdp-poster.jpg')) {
       programPoster.src = 'assets/cdp-poster.jpg';
     }
@@ -339,7 +333,8 @@ document.querySelectorAll('.accordion details').forEach((detail) => {
   });
 });
 
-document.querySelector('#year').textContent = new Date().getFullYear();
+const yearElement = document.querySelector('#year');
+if (yearElement) yearElement.textContent = new Date().getFullYear();
 applyPublicConfig();
 window.addEventListener('storage', (event) => {
   if (event.key === CONFIG_KEY) applyPublicConfig();

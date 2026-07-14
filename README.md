@@ -4,7 +4,7 @@ A responsive CDP registration website and admin dashboard built with plain HTML,
 
 ## Preview
 
-Open `index.html` for the participant page and `admin.html` for the dashboard. No build step is required.
+Open `index.html` for the programme page, `register.html` for the focused registration and payment flow, and `admin.html` for the dashboard. No build step is required.
 
 The prototype uses browser `localStorage`, so admin changes and registrations are shared only between pages opened in the same browser and on the same origin. Use a local web server rather than opening the files separately if the browser restricts storage for `file://` pages.
 

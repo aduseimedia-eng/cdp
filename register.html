@@ -3,57 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Register for the Continuous Development Program hosted by the Institute of Directors-Ghana and confirm your payment.">
+  <meta name="description" content="Register and confirm payment for the Institute of Directors-Ghana Continuous Development Program.">
   <meta name="theme-color" content="#eef1f4">
-  <title>Continuous Development Program | Institute of Directors-Ghana</title>
+  <title>Register for CDP | Institute of Directors-Ghana</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="registration-only-page">
   <header class="site-header">
     <div class="container nav-wrap">
-      <a class="brand" href="#top" aria-label="Institute of Directors-Ghana CDP home">
+      <a class="brand" href="index.html" aria-label="Return to the CDP programme page">
         <span class="brand-mark"><img src="IoD_Logo_blue.png" alt="Institute of Directors-Ghana logo"></span>
         <span class="brand-copy"><strong>Institute of Directors-Ghana</strong><small>CDP REGISTRATION</small></span>
       </a>
+      <a class="registration-back-link" href="index.html"><span aria-hidden="true">←</span> Programme page</a>
     </div>
   </header>
 
-  <main id="top">
-    <section class="registration-section" id="registration">
-      <div class="background-orb" aria-hidden="true"></div>
-      <div class="container registration-grid">
-        <div class="registration-aside">
-          <div class="eyebrow"><span></span> <span id="programmeEyebrow">Institute of Directors-Ghana presents</span></div>
-          <h1><span id="programmeTitle">Continuous Development Program</span> <em id="programmeEdition">2026.</em></h1>
-          <p class="intro" id="programmeDescription">Register for the upcoming Continuous Development Program hosted by the Institute of Directors-Ghana. Complete your details and confirm payment to secure your place.</p>
-
-          <div class="event-meta" id="eventMeta">
-            <div><span aria-hidden="true">□</span><p><small>Date</small><strong id="programmeDate">See official poster</strong></p></div>
-            <div><span aria-hidden="true">◷</span><p><small>Time</small><strong id="programmeTime">See official poster</strong></p></div>
-            <div><span aria-hidden="true">▷</span><p><small>Venue</small><strong id="programmeVenue">IoD-Ghana</strong></p></div>
-          </div>
-
-          <div class="price-line" id="priceLine"><span>Programme fee</span><strong id="programmeFee">GHS —</strong></div>
-
-          <a class="mobile-register-button" href="register.html">Click to Register <span aria-hidden="true">→</span></a>
-
-          <figure class="poster-card" id="posterCard">
-            <img id="programPoster" src="assets/cdp-poster.jpg" alt="Official poster for the Institute of Directors-Ghana CDP" hidden>
-            <div class="poster-placeholder" id="posterPlaceholder">
-              <span class="poster-icon" aria-hidden="true">▧</span>
-              <p><strong>Official CDP poster</strong><small>The programme poster will appear here.</small></p>
-            </div>
-            <figcaption>Official programme poster</figcaption>
-          </figure>
-
-          <div class="process-list" aria-label="Registration process">
-            <div class="active"><span>1</span><p><strong>Register</strong><small>Enter your details</small></p></div><i></i>
-            <div><span>2</span><p><strong>Confirm payment</strong><small>Provide your transaction ID</small></p></div><i></i>
-            <div><span>3</span><p><strong>Join</strong><small>Receive the link on WhatsApp</small></p></div>
-          </div>
+  <main>
+    <section class="registration-section registration-only-section">
+      <div class="registration-only-shell">
+        <div class="registration-page-heading">
+          <span class="step-label">CDP registration</span>
+          <h1>Register and confirm payment</h1>
+          <p>Complete both steps to submit your registration.</p>
         </div>
 
         <div class="form-card" id="registrationFormCard">
@@ -97,6 +72,7 @@
             <span class="step-label">Registration closed</span>
             <h2 id="closedTitle">Registration is currently unavailable.</h2>
             <p>Please check back later or contact the Institute of Directors-Ghana for assistance.</p>
+            <a class="registration-return-link" href="index.html">Return to programme page</a>
           </section>
 
           <section class="success-state" id="successState" aria-live="polite">
@@ -112,7 +88,7 @@
     </section>
   </main>
 
-  <footer><div class="container"><p>© <span id="year"></span> Institute of Directors-Ghana</p><div class="footer-end"><p>CDP registration and payment confirmation</p><a class="admin-entry" href="admin.html" aria-label="Open admin dashboard" title="Admin dashboard">Admin</a></div></div></footer>
+  <footer><div class="container"><p>© <span id="year"></span> Institute of Directors-Ghana</p><div class="footer-end"><p>CDP registration and payment confirmation</p></div></div></footer>
   <div class="toast" id="toast" role="status" aria-live="polite">Copied</div>
   <script src="app.js"></script>
 </body>
