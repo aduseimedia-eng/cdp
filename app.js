@@ -17,6 +17,7 @@ const closedState = document.querySelector('#closedState');
 
 const CONFIG_KEY = 'iodCdpConfig';
 const REGISTRATIONS_KEY = 'iodCdpRegistrations';
+const REGISTRATION_DRAFT_KEY = 'iodCdpRegistrationDraft';
 const DEFAULT_CONFIG = {
   eyebrow: 'Institute of Directors-Ghana presents',
   title: 'Continuous Development Program',
@@ -84,7 +85,7 @@ function validateStep(stepNumber) {
   return valid;
 }
 
-function setStep(stepNumber) {
+function setStep(stepNumber, shouldScroll = true) {
   currentStep = stepNumber;
   steps.forEach((step) => step.classList.toggle('active', Number(step.dataset.step) === stepNumber));
   progressBars.forEach((bar, index) => bar.classList.toggle('active', index < stepNumber));
@@ -92,7 +93,42 @@ function setStep(stepNumber) {
   stepLabel.textContent = `Step ${stepNumber} of 2`;
   formTitle.textContent = stepNumber === 1 ? 'Participant details' : 'Payment confirmation';
   formSubtitle.textContent = stepNumber === 1 ? 'Fields marked with * are required.' : 'Enter the details from your payment receipt.';
-  document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  saveRegistrationDraft();
+  if (shouldScroll) document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function saveRegistrationDraft() {
+  const fields = {};
+  [...form.elements].forEach((field) => {
+    if (!field.name || field.type === 'file' || field.type === 'submit' || field.type === 'button') return;
+    fields[field.name] = field.type === 'checkbox' ? field.checked : field.value;
+  });
+
+  try {
+    sessionStorage.setItem(REGISTRATION_DRAFT_KEY, JSON.stringify({ step: currentStep, fields }));
+  } catch {
+    // The form remains usable when browser storage is unavailable.
+  }
+}
+
+function restoreRegistrationDraft() {
+  try {
+    const draft = JSON.parse(sessionStorage.getItem(REGISTRATION_DRAFT_KEY));
+    if (!draft?.fields) return;
+
+    Object.entries(draft.fields).forEach(([name, value]) => {
+      const field = form.elements.namedItem(name);
+      if (!field || field.type === 'file') return;
+      if (field.type === 'checkbox') field.checked = Boolean(value);
+      else field.value = value;
+    });
+
+    const restoredStep = Number(draft.step) === 2 ? 2 : 1;
+    updatePaymentDisplay(loadConfig(), form.elements.network.value, String(draft.fields.bankAccount || ''));
+    setStep(restoredStep, false);
+  } catch {
+    sessionStorage.removeItem(REGISTRATION_DRAFT_KEY);
+  }
 }
 
 continueButton.addEventListener('click', () => {
@@ -110,7 +146,10 @@ form.addEventListener('input', (event) => {
     event.target.closest('.check-field').classList.remove('invalid');
     document.querySelector('.check-error').classList.remove('visible');
   }
+  saveRegistrationDraft();
 });
+
+form.addEventListener('change', saveRegistrationDraft);
 
 receiptInput.addEventListener('change', () => {
   const [file] = receiptInput.files;
@@ -304,6 +343,7 @@ form.addEventListener('submit', (event) => {
     status: 'Pending',
     submittedAt: new Date().toISOString()
   });
+  sessionStorage.removeItem(REGISTRATION_DRAFT_KEY);
   document.querySelector('#successName').textContent = data.get('firstName');
   document.querySelector('#referenceNumber').textContent = reference;
   form.style.display = 'none';
@@ -314,6 +354,7 @@ form.addEventListener('submit', (event) => {
 });
 
 document.querySelector('#newRegistration').addEventListener('click', () => {
+  sessionStorage.removeItem(REGISTRATION_DRAFT_KEY);
   form.reset();
   document.querySelectorAll('.invalid').forEach((item) => item.classList.remove('invalid'));
   document.querySelectorAll('.error-text').forEach((item) => item.classList.remove('visible'));
@@ -336,6 +377,7 @@ document.querySelectorAll('.accordion details').forEach((detail) => {
 const yearElement = document.querySelector('#year');
 if (yearElement) yearElement.textContent = new Date().getFullYear();
 applyPublicConfig();
+restoreRegistrationDraft();
 window.addEventListener('storage', (event) => {
   if (event.key === CONFIG_KEY) applyPublicConfig();
 });
