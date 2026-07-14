@@ -87,6 +87,7 @@ function validateStep(stepNumber) {
 
 function setStep(stepNumber, shouldScroll = true) {
   currentStep = stepNumber;
+  document.body.classList.toggle('payment-step-active', stepNumber === 2);
   steps.forEach((step) => step.classList.toggle('active', Number(step.dataset.step) === stepNumber));
   progressBars.forEach((bar, index) => bar.classList.toggle('active', index < stepNumber));
   processItems.forEach((item, index) => item.classList.toggle('active', index < stepNumber));
@@ -367,6 +368,7 @@ form.addEventListener('submit', (event) => {
     submittedAt: new Date().toISOString()
   });
   sessionStorage.removeItem(REGISTRATION_DRAFT_KEY);
+  document.body.classList.remove('payment-step-active');
   document.querySelector('#successName').textContent = data.get('firstName');
   document.querySelector('#referenceNumber').textContent = reference;
   form.style.display = 'none';

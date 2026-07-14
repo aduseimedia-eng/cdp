@@ -2073,6 +2073,7 @@ footer a {
 }
 
 body.registration-is-closed .registration-page-back { display: none; }
+body.payment-step-active .registration-page-back { display: none; }
 
 .registration-only-section {
   min-height: calc(100vh - 78px);
