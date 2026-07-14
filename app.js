@@ -345,13 +345,14 @@ form.addEventListener('submit', (event) => {
   // Production integration point: send FormData to a secure backend. The backend
   // must verify the transaction before triggering an approved WhatsApp template.
   const data = new FormData(form);
+  const participantFirstName = form.elements.firstName.value.trim();
   const reference = `IOD-CDP-${Date.now().toString().slice(-6)}`;
   const submissionConfig = loadConfig();
   const selectedBank = submissionConfig.bankAccounts.find((bank) => bank.id === data.get('bankAccount'));
   storeRegistration({
     reference,
     title: data.get('title'),
-    firstName: data.get('firstName'),
+    firstName: participantFirstName,
     lastName: data.get('lastName'),
     email: data.get('email'),
     organization: data.get('organization'),
@@ -367,7 +368,7 @@ form.addEventListener('submit', (event) => {
     submittedAt: new Date().toISOString()
   });
   sessionStorage.removeItem(REGISTRATION_DRAFT_KEY);
-  document.querySelector('#successName').textContent = data.get('firstName');
+  document.querySelector('#successName').textContent = participantFirstName || 'friend';
   document.querySelector('#referenceNumber').textContent = reference;
   form.style.display = 'none';
   formHeader.style.display = 'none';
