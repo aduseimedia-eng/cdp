@@ -43,6 +43,7 @@
         <button class="nav-item" type="button" data-section="content"><span aria-hidden="true">✎</span> Page content</button>
         <button class="nav-item" type="button" data-section="payments"><span aria-hidden="true">◇</span> Payment settings</button>
         <button class="nav-item" type="button" data-section="registrations"><span aria-hidden="true">◎</span> Registrations <b id="navRegistrationCount">0</b></button>
+        <button class="nav-item" type="button" data-section="security"><span aria-hidden="true">&#128274;</span> Security</button>
       </nav>
 
       <div class="sidebar-bottom">
@@ -158,6 +159,32 @@
               </table>
             </div>
           </div>
+        </section>
+
+        <section class="dashboard-section" data-page="security">
+          <div class="section-heading">
+            <div><span class="section-kicker">Administrator account</span><h2>Security</h2><p>Change the password used to access this dashboard.</p></div>
+          </div>
+          <form class="panel settings-panel password-settings" id="changePasswordForm" novalidate>
+            <div class="panel-heading"><div><h3>Change admin password</h3><p>Your password is converted to a hash before it is saved.</p></div></div>
+            <div class="admin-field">
+              <label for="currentAdminPassword">Current password</label>
+              <input id="currentAdminPassword" type="password" autocomplete="current-password" required>
+            </div>
+            <div class="admin-field">
+              <label for="newAdminPassword">New password</label>
+              <input id="newAdminPassword" type="password" autocomplete="new-password" minlength="4" required>
+              <small>Use at least 4 characters.</small>
+            </div>
+            <div class="admin-field">
+              <label for="confirmAdminPassword">Confirm new password</label>
+              <input id="confirmAdminPassword" type="password" autocomplete="new-password" minlength="4" required>
+            </div>
+            <label class="show-passwords-row"><input id="showChangePasswords" type="checkbox"> Show passwords</label>
+            <p class="password-change-message" id="passwordChangeMessage" role="alert" aria-live="polite"></p>
+            <button class="change-password-button" id="changePasswordButton" type="submit">Update password</button>
+            <div class="security-note password-security-note"><span>!</span><p><strong>Important</strong> After changing the password, you will be signed out and must log in again with the new password.</p></div>
+          </form>
         </section>
       </div>
     </main>

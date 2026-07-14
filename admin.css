@@ -175,6 +175,18 @@ a { color: inherit; }
 .security-note p { margin: 0; font-size: 8px; line-height: 1.5; }
 .security-note strong { display: block; margin-bottom: 2px; }
 
+.password-settings { max-width: 600px; }
+.password-settings .admin-field { max-width: 470px; }
+.password-settings .admin-field > small { position: static; display: block; margin-top: 5px; }
+.show-passwords-row { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 11px; font-weight: 600; cursor: pointer; }
+.show-passwords-row input { width: 17px; height: 17px; accent-color: var(--navy); }
+.password-change-message { min-height: 20px; margin: 12px 0 5px; color: var(--danger); font-size: 11px; font-weight: 600; }
+.password-change-message.success { color: #227364; }
+.change-password-button { min-height: 43px; padding: 0 18px; color: white; background: #1679c4; border: 0; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer; box-shadow: 0 9px 22px rgba(22,121,196,.18); }
+.change-password-button:hover { background: #0d63a5; }
+.change-password-button:disabled { opacity: .6; cursor: wait; }
+.password-security-note { max-width: 470px; margin-top: 20px; }
+
 .registrations-heading { align-items: center; }
 .table-tools { display: flex; gap: 8px; }
 .table-tools input { width: 240px; height: 38px; padding: 0 12px; background: white; border: 1px solid var(--line); border-radius: 8px; outline: 0; font-size: 9px; }

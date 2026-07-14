@@ -1,7 +1,8 @@
 const CONFIG_KEY = 'iodCdpConfig';
 const REGISTRATIONS_KEY = 'iodCdpRegistrations';
 const AUTH_SESSION_KEY = 'iodCdpAdminAuthenticated';
-const ADMIN_PASSWORD_HASH = 'c45565ceec73207eb2e8167f783a2c09c1ba02fb3fbbd71c5b9a43d997b2de04';
+const ADMIN_PASSWORD_HASH_KEY = 'iodCdpAdminPasswordHash';
+const DEFAULT_ADMIN_PASSWORD_HASH = 'a34c7305af5b1b2cea20ff1591696acf02402faf4f4f38400ab36c421b11fe81';
 const MAX_LOGIN_ATTEMPTS = 5;
 const LOCKOUT_DURATION = 30000;
 
@@ -36,7 +37,8 @@ const headings = {
   overview: 'Dashboard overview',
   content: 'Programme content',
   payments: 'Payment settings',
-  registrations: 'Registrations'
+  registrations: 'Registrations',
+  security: 'Security'
 };
 
 const fieldMap = {
@@ -74,6 +76,10 @@ async function hashPassword(value) {
   return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('');
 }
 
+function getAdminPasswordHash() {
+  return localStorage.getItem(ADMIN_PASSWORD_HASH_KEY) || DEFAULT_ADMIN_PASSWORD_HASH;
+}
+
 function revealDashboard() {
   document.querySelector('#loginScreen').hidden = true;
   document.querySelector('#adminShell').hidden = false;
@@ -102,7 +108,7 @@ async function handleLogin(event) {
   const submittedHash = await hashPassword(document.querySelector('#adminPassword').value);
   button.disabled = false;
 
-  if (submittedHash === ADMIN_PASSWORD_HASH) {
+  if (submittedHash === getAdminPasswordHash()) {
     failedLoginAttempts = 0;
     sessionStorage.setItem(AUTH_SESSION_KEY, 'true');
     revealDashboard();
@@ -119,6 +125,65 @@ async function handleLogin(event) {
     error.textContent = `Incorrect password. ${MAX_LOGIN_ATTEMPTS - failedLoginAttempts} attempts remaining.`;
   }
   document.querySelector('#adminPassword').focus();
+}
+
+async function changeAdminPassword(event) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const currentPassword = document.querySelector('#currentAdminPassword').value;
+  const newPassword = document.querySelector('#newAdminPassword').value;
+  const confirmation = document.querySelector('#confirmAdminPassword').value;
+  const message = document.querySelector('#passwordChangeMessage');
+  const button = document.querySelector('#changePasswordButton');
+
+  message.className = 'password-change-message';
+  message.textContent = '';
+
+  if (!currentPassword || !newPassword || !confirmation) {
+    message.textContent = 'Complete all password fields.';
+    return;
+  }
+
+  if (newPassword.length < 4) {
+    message.textContent = 'The new password must contain at least 4 characters.';
+    return;
+  }
+
+  if (newPassword !== confirmation) {
+    message.textContent = 'The new passwords do not match.';
+    return;
+  }
+
+  button.disabled = true;
+  const [currentHash, newHash] = await Promise.all([
+    hashPassword(currentPassword),
+    hashPassword(newPassword)
+  ]);
+  button.disabled = false;
+
+  if (currentHash !== getAdminPasswordHash()) {
+    message.textContent = 'The current password is incorrect.';
+    document.querySelector('#currentAdminPassword').focus();
+    return;
+  }
+
+  if (currentHash === newHash) {
+    message.textContent = 'Choose a new password that is different from the current password.';
+    document.querySelector('#newAdminPassword').focus();
+    return;
+  }
+
+  localStorage.setItem(ADMIN_PASSWORD_HASH_KEY, newHash);
+  form.reset();
+  message.classList.add('success');
+  message.textContent = 'Password updated. Signing you out…';
+  sessionStorage.removeItem(AUTH_SESSION_KEY);
+  window.setTimeout(() => {
+    revealLogin();
+    openSection('overview');
+    message.className = 'password-change-message';
+    message.textContent = '';
+  }, 900);
 }
 
 function logout() {
@@ -482,6 +547,13 @@ document.querySelector('#sidebarOverlay').addEventListener('click', closeSidebar
 document.querySelector('#saveAllButton').addEventListener('click', saveAll);
 document.querySelector('#contentForm').addEventListener('submit', (event) => event.preventDefault());
 document.querySelector('#paymentForm').addEventListener('submit', (event) => event.preventDefault());
+document.querySelector('#changePasswordForm').addEventListener('submit', changeAdminPassword);
+document.querySelector('#showChangePasswords').addEventListener('change', (event) => {
+  const inputType = event.currentTarget.checked ? 'text' : 'password';
+  ['#currentAdminPassword', '#newAdminPassword', '#confirmAdminPassword'].forEach((selector) => {
+    document.querySelector(selector).type = inputType;
+  });
+});
 document.querySelector('#adminDescription').addEventListener('input', updateDescriptionCount);
 document.querySelector('#registrationSearch').addEventListener('input', (event) => renderRegistrations(event.target.value));
 document.querySelector('#exportButton').addEventListener('click', exportCsv);
@@ -533,6 +605,7 @@ window.addEventListener('storage', (event) => {
     registrations = readJson(REGISTRATIONS_KEY, []);
     updateDashboard();
   }
+  if (event.key === ADMIN_PASSWORD_HASH_KEY) logout();
 });
 
 populateForms();

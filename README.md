@@ -10,7 +10,7 @@ The prototype uses browser `localStorage`, so admin changes and registrations ar
 
 ## Admin dashboard
 
-The dashboard login uses the temporary prototype password `IoD@CDP2026`. Change this before sharing or deploying the project.
+An authenticated administrator can change the initial dashboard password from the Security page. Only its SHA-256 hash is saved in the browser; the plain-text password is never stored in the project or browser storage.
 
 The dashboard can:
 
