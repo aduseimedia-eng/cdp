@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Register for the Continuous Development Program hosted by the Institute of Directors-Ghana and confirm your payment.">
+  <meta name="theme-color" content="#eef1f4">
+  <title>Continuous Development Program | Institute of Directors-Ghana</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="#top" aria-label="Institute of Directors-Ghana CDP home">
+        <span class="brand-mark"><img src="IoD_Logo_blue.png" alt="Institute of Directors-Ghana logo"></span>
+        <span class="brand-copy"><strong>Institute of Directors-Ghana</strong><small>CDP REGISTRATION</small></span>
+      </a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="registration-section" id="registration">
+      <div class="background-orb" aria-hidden="true"></div>
+      <div class="container registration-grid">
+        <div class="registration-aside">
+          <div class="eyebrow"><span></span> <span id="programmeEyebrow">Institute of Directors-Ghana presents</span></div>
+          <h1><span id="programmeTitle">Continuous Development Program</span> <em id="programmeEdition">2026.</em></h1>
+          <p class="intro" id="programmeDescription">Register for the upcoming Continuous Development Program hosted by the Institute of Directors-Ghana. Complete your details and confirm payment to secure your place.</p>
+
+          <div class="event-meta" id="eventMeta">
+            <div><span aria-hidden="true">□</span><p><small>Date</small><strong id="programmeDate">See official poster</strong></p></div>
+            <div><span aria-hidden="true">◷</span><p><small>Time</small><strong id="programmeTime">See official poster</strong></p></div>
+            <div><span aria-hidden="true">▷</span><p><small>Venue</small><strong id="programmeVenue">IoD-Ghana</strong></p></div>
+          </div>
+
+          <div class="price-line" id="priceLine"><span>Programme fee</span><strong id="programmeFee">GHS —</strong></div>
+
+          <figure class="poster-card" id="posterCard">
+            <img id="programPoster" src="assets/cdp-poster.jpg" alt="Official poster for the Institute of Directors-Ghana CDP" hidden>
+            <div class="poster-placeholder" id="posterPlaceholder">
+              <span class="poster-icon" aria-hidden="true">▧</span>
+              <p><strong>Official CDP poster</strong><small>The programme poster will appear here.</small></p>
+            </div>
+            <figcaption>Official programme poster</figcaption>
+          </figure>
+
+          <div class="process-list" aria-label="Registration process">
+            <div class="active"><span>1</span><p><strong>Register</strong><small>Enter your details</small></p></div><i></i>
+            <div><span>2</span><p><strong>Confirm payment</strong><small>Provide your transaction ID</small></p></div><i></i>
+            <div><span>3</span><p><strong>Join</strong><small>Receive the link on WhatsApp</small></p></div>
+          </div>
+        </div>
+
+        <button class="mobile-register-button" id="mobileRegisterButton" type="button" aria-expanded="false" aria-controls="registrationFormCard">Click to Register <span aria-hidden="true">→</span></button>
+
+        <div class="form-card" id="registrationFormCard">
+          <div class="form-card-head">
+            <div><span class="step-label">Step 1 of 2</span><h2>Participant details</h2><p>Fields marked with * are required.</p></div>
+            <div class="form-progress" aria-label="Registration progress"><span class="active"></span><span></span></div>
+          </div>
+
+          <form id="registrationForm" novalidate>
+            <section class="form-step active" data-step="1" aria-label="Participant details">
+              <div class="field-grid name-grid">
+                <label class="field"><span>Title</span><select name="title"><option value="">None</option><option>Mr</option><option>Mrs</option><option>Ms</option><option>Dr</option><option>Prof</option><option>Engr</option><option>Hon</option></select></label>
+                <label class="field"><span>First name *</span><input type="text" name="firstName" autocomplete="given-name" placeholder="Ama" required><small class="error-text">Enter your first name.</small></label>
+                <label class="field"><span>Last name *</span><input type="text" name="lastName" autocomplete="family-name" placeholder="Mensah" required><small class="error-text">Enter your last name.</small></label>
+              </div>
+              <label class="field"><span>Email address *</span><input type="email" name="email" autocomplete="email" placeholder="you@example.com" required><small class="error-text">Enter a valid email address.</small></label>
+              <label class="field"><span>Organization *</span><input type="text" name="organization" autocomplete="organization" placeholder="Your organization or company" required><small class="error-text">Enter your organization.</small></label>
+              <label class="field"><span>WhatsApp number *</span><div class="phone-input"><span>🇬🇭 +233</span><input type="tel" name="whatsapp" autocomplete="tel-national" inputmode="numeric" placeholder="240000000" pattern="[0-9]{9,10}" minlength="9" maxlength="10" required></div><small class="field-help">Enter 9 or 10 digits. Your joining link will be sent to this number.</small><small class="error-text">Enter a valid 9 or 10-digit WhatsApp number.</small></label>
+              <label class="field"><span>You are a... *</span><select name="role" required><option value="">Select an option</option><option>Business owner / founder</option><option>Professional / employee</option><option>Freelancer / consultant</option><option>Student / aspiring founder</option><option>Other</option></select><small class="error-text">Select an option.</small></label>
+              <label class="check-field"><input type="checkbox" name="whatsappConsent" required><span>I agree to receive registration updates and my joining link via WhatsApp. *</span></label>
+              <small class="error-text check-error">Please agree so we can send your access link.</small>
+              <button class="button button-accent button-full" type="button" id="continueButton">Continue to payment <span aria-hidden="true">→</span></button>
+            </section>
+
+            <section class="form-step" data-step="2" aria-label="Payment confirmation">
+              <label class="field"><span>Payment method *</span><select name="network" required><option value="">Select method</option><option value="Mobile Money">Mobile Money</option><option value="Bank transfer">Bank transfer</option></select><small class="error-text">Select your payment method.</small></label>
+              <label class="field" id="bankAccountField" hidden><span>Select bank *</span><select id="bankAccountSelect" name="bankAccount"><option value="">Select bank</option></select><small class="error-text">Select a bank account.</small></label>
+              <div class="payment-box" id="payment" hidden>
+                <div class="payment-box-head"><span class="momo-badge" id="paymentBadge">MoMo</span><div><small>Programme fee</small><strong id="paymentAmount">GHS —</strong></div></div>
+                <dl><div><dt id="paymentProviderLabel">Network</dt><dd id="paymentProviderValue">See official poster</dd></div><div><dt>Account name</dt><dd id="paymentMerchant">INSTITUTE OF DIRECTORS-GHANA</dd></div><div><dt id="paymentAccountLabel">MoMo number</dt><dd id="paymentInstructions">Use details on poster</dd></div><div><dt>Reference</dt><dd>Your full name</dd></div></dl>
+              </div>
+              <label class="field" id="paymentPhoneField"><span>Payment phone number *</span><input id="paymentPhoneInput" type="tel" name="paymentPhone" inputmode="numeric" placeholder="024 000 0000" pattern="[0-9 ]{10,13}" required><small class="error-text">Enter the number used for payment.</small></label>
+              <label class="field"><span>Transaction ID *</span><input type="text" name="transactionId" placeholder="e.g. 18482910483" minlength="6" required><small class="error-text">Enter your transaction ID.</small></label>
+              <label class="field upload-field"><span>Payment screenshot <small>(optional)</small></span><input type="file" name="receipt" id="receipt" accept="image/png,image/jpeg,image/webp"><span class="upload-box"><span class="upload-icon" aria-hidden="true">↥</span><span><strong id="uploadLabel">Upload payment receipt</strong><small>PNG, JPG or WEBP — max. 5MB</small></span></span><small class="error-text" id="fileError">Choose an image smaller than 5MB.</small></label>
+              <div class="form-buttons"><button class="button button-secondary" type="button" id="backButton">← Back</button><button class="button button-accent" type="submit">Submit confirmation <span aria-hidden="true">→</span></button></div>
+            </section>
+          </form>
+
+          <section class="closed-state" id="closedState" aria-live="polite">
+            <div class="closed-icon" aria-hidden="true">!</div>
+            <span class="step-label">Registration closed</span>
+            <h2 id="closedTitle">Registration is currently unavailable.</h2>
+            <p>Please check back later or contact the Institute of Directors-Ghana for assistance.</p>
+          </section>
+
+          <section class="success-state" id="successState" aria-live="polite">
+            <div class="success-icon" aria-hidden="true">✓</div><span class="step-label">Registration received</span>
+            <h2>You’re almost there, <span id="successName">friend</span>!</h2>
+            <p>We’ll verify your payment and send the private programme link to your WhatsApp number.</p>
+            <div class="reference-box"><small>Registration reference</small><strong id="referenceNumber">IOD-CDP-000000</strong></div>
+            <p class="success-help">Verification usually takes up to 24 hours.</p>
+            <button class="text-button" type="button" id="newRegistration">Submit another registration</button>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="container"><p>© <span id="year"></span> Institute of Directors-Ghana</p><div class="footer-end"><p>CDP registration and payment confirmation</p><a class="admin-entry" href="admin.html" aria-label="Open admin dashboard" title="Admin dashboard">Admin</a></div></div></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite">Copied</div>
+  <script src="app.js"></script>
+</body>
+</html>

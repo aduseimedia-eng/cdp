@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0d172c">
+  <title>CDP Admin | Institute of Directors-Ghana</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <section class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <div class="login-brand"><img src="IoD_Logo_blue.png" alt="Institute of Directors-Ghana logo"></div>
+      <span class="section-kicker">Restricted access</span>
+      <h1>CDP Admin</h1>
+      <p>Enter the administrator password to continue.</p>
+      <form id="loginForm" novalidate>
+        <label for="adminPassword">Password</label>
+        <div class="password-field">
+          <input id="adminPassword" type="password" autocomplete="current-password" required autofocus>
+          <button id="togglePassword" type="button" aria-label="Show password">Show</button>
+        </div>
+        <p class="login-error" id="loginError" role="alert"></p>
+        <button class="login-button" id="loginButton" type="submit">Sign in</button>
+      </form>
+      <a class="login-public-link" href="index.html">← View public page</a>
+      <small>Institute of Directors-Ghana</small>
+    </div>
+  </section>
+
+  <div class="admin-shell" id="adminShell" hidden>
+    <aside class="sidebar" id="sidebar">
+      <div class="admin-brand">
+        <span><img src="IoD_Logo_blue.png" alt="Institute of Directors-Ghana logo"></span>
+        <p><strong>CDP Admin</strong><small>Institute of Directors-Ghana</small></p>
+      </div>
+
+      <nav class="admin-nav" aria-label="Admin navigation">
+        <button class="nav-item active" type="button" data-section="overview"><span aria-hidden="true">▦</span> Overview</button>
+        <button class="nav-item" type="button" data-section="content"><span aria-hidden="true">✎</span> Page content</button>
+        <button class="nav-item" type="button" data-section="payments"><span aria-hidden="true">◇</span> Payment settings</button>
+        <button class="nav-item" type="button" data-section="registrations"><span aria-hidden="true">◎</span> Registrations <b id="navRegistrationCount">0</b></button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <a class="quiet-public-link" href="index.html" target="_blank" rel="noopener"><span aria-hidden="true">↗</span> View public page</a>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin-header">
+        <button class="menu-button" id="menuButton" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
+        <div><p>CDP administration</p><h1 id="pageHeading">Dashboard overview</h1></div>
+        <div class="header-actions">
+          <span class="publish-status" id="publishStatus"><i></i> Registration open</span>
+          <button class="primary-button" id="saveAllButton" type="button">Save changes</button>
+          <button class="logout-button" id="logoutButton" type="button">Log out</button>
+        </div>
+      </header>
+
+      <div class="admin-content">
+        <section class="dashboard-section active" data-page="overview">
+          <div class="metric-grid">
+            <article><span class="metric-icon coral">◎</span><p><small>Total registrations</small><strong id="totalRegistrations">0</strong><em>All submitted entries</em></p></article>
+            <article><span class="metric-icon amber">◷</span><p><small>Pending payments</small><strong id="pendingRegistrations">0</strong><em>Awaiting verification</em></p></article>
+            <article><span class="metric-icon teal">✓</span><p><small>Verified payments</small><strong id="verifiedRegistrations">0</strong><em>Ready for programme access</em></p></article>
+          </div>
+
+          <div class="overview-grid">
+            <article class="panel programme-summary">
+              <div class="panel-heading"><div><span class="section-kicker">Current programme</span><h3 id="summaryTitle">CDP 2026</h3></div><button class="text-action" type="button" data-go-section="content">Edit content</button></div>
+              <dl><div><dt>Date</dt><dd id="summaryDate">See official poster</dd></div><div><dt>Time</dt><dd id="summaryTime">See official poster</dd></div><div><dt>Venue</dt><dd id="summaryVenue">IoD-Ghana</dd></div><div><dt>Fee</dt><dd id="summaryFee">See poster</dd></div></dl>
+            </article>
+
+            <article class="panel recent-panel">
+              <div class="panel-heading"><div><span class="section-kicker">Latest activity</span><h3>Recent registrations</h3></div><button class="text-action" type="button" data-go-section="registrations">View all</button></div>
+              <div class="recent-list" id="recentRegistrations"><p class="empty-small">No registrations yet.</p></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="dashboard-section" data-page="content">
+          <div class="section-heading"><div><span class="section-kicker">Public page</span><h2>Programme content</h2><p>Control the information displayed on the participant registration page.</p></div></div>
+          <form class="settings-layout" id="contentForm">
+            <div class="panel settings-panel">
+              <div class="panel-heading"><div><h3>Programme information</h3><p>Update the primary heading and programme details.</p></div></div>
+              <div class="admin-field"><label for="adminEyebrow">Heading label</label><input id="adminEyebrow" name="eyebrow" type="text" maxlength="80"></div>
+              <div class="admin-grid two">
+                <div class="admin-field"><label for="adminTitle">Programme name</label><input id="adminTitle" name="title" type="text" maxlength="40"></div>
+                <div class="admin-field"><label for="adminEdition">Edition / year</label><input id="adminEdition" name="edition" type="text" maxlength="20"></div>
+              </div>
+              <div class="admin-field"><label for="adminDescription">Short description</label><textarea id="adminDescription" name="description" rows="4" maxlength="280"></textarea><small><span id="descriptionCount">0</span>/280 characters</small></div>
+              <div class="admin-grid two">
+                <div class="admin-field"><label for="adminDate">Date</label><input id="adminDate" name="date" type="text"></div>
+                <div class="admin-field"><label for="adminTime">Time</label><input id="adminTime" name="time" type="text"></div>
+                <div class="admin-field"><label for="adminVenue">Venue</label><input id="adminVenue" name="venue" type="text"></div>
+                <div class="admin-field"><label for="adminFee">Programme fee (GHS)</label><input id="adminFee" name="fee" type="text" placeholder="e.g. 250.00"></div>
+              </div>
+            </div>
+
+            <div class="settings-side">
+              <article class="panel settings-panel poster-settings">
+                <div class="panel-heading"><div><h3>Programme poster</h3><p>JPG, PNG or WEBP, up to 2MB.</p></div></div>
+                <div class="poster-preview" id="adminPosterPreview"><span>Poster preview</span></div>
+                <label class="upload-button" for="adminPoster">Choose poster</label>
+                <input id="adminPoster" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+                <button class="remove-poster" id="removePosterButton" type="button">Remove poster</button>
+                <p class="inline-error" id="posterError"></p>
+              </article>
+
+              <article class="panel settings-panel visibility-settings">
+                <div class="panel-heading"><div><h3>Page visibility</h3><p>Choose which sections participants can see.</p></div></div>
+                <label class="switch-row"><span><strong>Registration open</strong><small>Allow new submissions</small></span><input id="adminRegistrationOpen" type="checkbox"><i></i></label>
+                <label class="switch-row"><span><strong>Show poster</strong><small>Display the poster panel</small></span><input id="adminShowPoster" type="checkbox"><i></i></label>
+                <label class="switch-row"><span><strong>Show event details</strong><small>Date, time and venue</small></span><input id="adminShowEventDetails" type="checkbox"><i></i></label>
+                <label class="switch-row"><span><strong>Show programme fee</strong><small>Display fee on public page</small></span><input id="adminShowFee" type="checkbox"><i></i></label>
+              </article>
+            </div>
+          </form>
+        </section>
+
+        <section class="dashboard-section" data-page="payments">
+          <div class="section-heading"><div><span class="section-kicker">Registration workflow</span><h2>Payment settings</h2><p>Set the instructions participants see before submitting payment confirmation.</p></div></div>
+          <form class="panel settings-panel payment-settings" id="paymentForm">
+            <div class="admin-field"><label for="adminPaymentAmount">Programme amount (GHS)</label><input id="adminPaymentAmount" name="paymentAmount" type="text" placeholder="e.g. 250.00"></div>
+
+            <div class="payment-method-card momo-method">
+              <div class="payment-method-heading"><span>MoMo</span><div><h3>Mobile Money details</h3><p>Shown when a participant selects Mobile Money.</p></div></div>
+              <div class="admin-grid two">
+                <div class="admin-field"><label for="adminMomoNetwork">Network</label><input id="adminMomoNetwork" name="momoNetwork" type="text" placeholder="e.g. MTN Mobile Money"></div>
+                <div class="admin-field"><label for="adminMomoNumber">MoMo number</label><input id="adminMomoNumber" name="momoNumber" type="tel" inputmode="numeric" placeholder="e.g. 0240000000"></div>
+              </div>
+              <div class="admin-field"><label for="adminMomoAccountName">Registered account name</label><input id="adminMomoAccountName" name="momoAccountName" type="text"></div>
+            </div>
+
+            <div class="payment-method-card bank-method">
+              <div class="payment-method-heading"><span>Bank</span><div><h3>Bank transfer accounts</h3><p>Add one or more bank accounts for participants to choose from.</p></div></div>
+              <div class="bank-accounts-list" id="bankAccountsList"></div>
+              <button class="add-bank-button" id="addBankButton" type="button"><span aria-hidden="true">+</span> Add another bank</button>
+            </div>
+            <div class="security-note"><span>!</span><p><strong>Production reminder</strong> Payment must be verified on the server or by an authorised administrator before a joining link is sent.</p></div>
+          </form>
+        </section>
+
+        <section class="dashboard-section" data-page="registrations">
+          <div class="section-heading registrations-heading">
+            <div><span class="section-kicker">Participants</span><h2>Registrations</h2><p>Review submitted participant and payment information.</p></div>
+            <div class="table-tools"><label><span class="sr-only">Search registrations</span><input id="registrationSearch" type="search" placeholder="Search name, phone or reference"></label><button id="exportButton" type="button">Export CSV</button></div>
+          </div>
+          <div class="panel table-panel">
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Participant</th><th>WhatsApp</th><th>Transaction</th><th>Submitted</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody id="registrationsTable"><tr><td colspan="6" class="empty-table">No registrations have been submitted.</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="delete-modal" id="deleteModal" hidden>
+    <div class="delete-modal-backdrop" id="deleteModalBackdrop"></div>
+    <section class="delete-dialog" role="dialog" aria-modal="true" aria-labelledby="deleteDialogTitle" aria-describedby="deleteDialogDescription">
+      <div class="delete-dialog-icon" aria-hidden="true">!</div>
+      <span class="section-kicker">Delete registration</span>
+      <h2 id="deleteDialogTitle">Are you sure?</h2>
+      <p id="deleteDialogDescription">The registration for <strong id="deleteParticipantName"></strong> will be permanently removed. This action cannot be undone.</p>
+      <div class="delete-dialog-actions">
+        <button class="cancel-delete-button" id="cancelDeleteButton" type="button">Cancel</button>
+        <button class="confirm-delete-button" id="confirmDeleteButton" type="button">Delete registration</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="admin-toast" id="adminToast" role="status" aria-live="polite">Changes saved</div>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <script src="admin.js"></script>
+</body>
+</html>
