@@ -2067,6 +2067,13 @@ footer a {
   outline: none;
 }
 
+.registration-page-back {
+  width: fit-content;
+  margin: 20px auto 0;
+}
+
+body.registration-is-closed .registration-page-back { display: none; }
+
 .registration-only-section {
   min-height: calc(100vh - 78px);
   padding: 122px 20px 52px;
@@ -2127,7 +2134,7 @@ footer a {
   .registration-only-page .brand-copy strong { max-width: 180px; }
   .registration-back-link { min-height: 42px; flex: 0 0 auto; padding-inline: 13px; font-size: 12px; box-shadow: 0 7px 16px rgba(22, 121, 196, 0.2); }
   .registration-back-link span { font-size: 17px; }
-  .registration-only-section { min-height: calc(100vh - 68px); padding: 68px 0 0; background: #f3f5f7; }
+  .registration-only-section { min-height: calc(100vh - 68px); padding: 68px 0 24px; background: #f3f5f7; }
   .registration-only-shell { width: 100%; }
   .registration-page-heading { display: none; }
   .registration-only-page .form-card { display: block; padding: 24px 18px 34px; background: var(--white); border: 0; border-radius: 0; box-shadow: none; }
@@ -2144,6 +2151,7 @@ footer a {
   .registration-only-page .phone-input { height: 50px; }
   .registration-only-page .phone-input input { height: 48px; }
   .registration-only-page .button { min-height: 51px; }
+  .registration-page-back { width: calc(100% - 36px); min-height: 48px; justify-content: center; margin-top: 18px; font-size: 13px; }
   .registration-only-page footer { border-top: 1px solid var(--line); }
   .registration-only-page footer .container { min-height: 68px; }
 }
