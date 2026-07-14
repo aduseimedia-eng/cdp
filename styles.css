@@ -1601,6 +1601,17 @@ footer p { font-size: 10px; }
   }
 }
 
+/* Larger, readable public navigation labels on phones. */
+@media (max-width: 640px) {
+  .brand-copy strong { font-size: 14px; }
+  .brand-copy small { margin-top: 5px; font-size: 8px; letter-spacing: .13em; }
+}
+
+@media (max-width: 380px) {
+  .brand-copy strong { font-size: 13px; }
+  .brand-copy small { font-size: 7px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
@@ -2150,4 +2161,15 @@ footer a {
     border-bottom-color: rgba(255, 255, 255, 0.1);
     box-shadow: 0 7px 24px rgba(6, 16, 34, 0.2);
   }
+}
+
+/* Final public navigation type scale — kept last so it overrides legacy mobile rules. */
+@media (max-width: 640px) {
+  .brand-copy strong { font-size: 14px; }
+  .brand-copy small { margin-top: 5px; font-size: 8px; letter-spacing: .13em; }
+}
+
+@media (max-width: 380px) {
+  .brand-copy strong { font-size: 13px; }
+  .brand-copy small { font-size: 7px; }
 }
