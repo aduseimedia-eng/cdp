@@ -1957,6 +1957,7 @@ footer a {
 }
 
 @media (max-width: 640px) {
+  html, body { width: 100%; max-width: 100%; overflow-x: hidden; }
   body { background: #f1f3f5; }
   .site-header { position: fixed; background: rgba(255,255,255,.95); border-bottom: 1px solid #e5e8ec; box-shadow: 0 5px 20px rgba(26,39,56,.05); backdrop-filter: blur(12px); }
   .nav-wrap { height: 68px; }
@@ -1965,21 +1966,23 @@ footer a {
   .brand-copy strong { overflow: hidden; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
   .brand-copy small { font-size: 7px; letter-spacing: .12em; }
   .registration-section { padding: 80px 0 14px; }
-  .registration-grid { width: 100%; gap: 22px; padding: 25px 16px 18px; background: #f7f8fa; border: 0; border-radius: 0; box-shadow: none; }
+  .registration-grid { width: 100%; max-width: 100%; gap: 22px; padding: 25px 16px 18px; background: #f7f8fa; border: 0; border-radius: 0; box-shadow: none; }
+  .registration-grid > *, .registration-aside { min-width: 0; max-width: 100%; }
   .registration-aside { width: 100%; padding: 0; }
   .eyebrow { margin-bottom: 11px; font-size: 10px; line-height: 1.4; letter-spacing: .1em; }
-  .registration-aside h1 { max-width: 100%; font-size: 30px; line-height: 1.14; }
-  .intro { margin: 15px 0 19px; font-size: 14px; line-height: 1.65; }
-  .event-meta { margin: 0; padding: 5px 14px; background: white; border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 5px 18px rgba(35,48,64,.04); }
+  .registration-aside h1 { width: 100%; max-width: 100%; overflow-wrap: anywhere; font-size: 30px; line-height: 1.14; }
+  .intro { width: 100%; max-width: 100%; margin: 15px 0 19px; overflow-wrap: anywhere; font-size: 14px; line-height: 1.65; }
+  .event-meta { width: 100%; min-width: 0; grid-template-columns: minmax(0, 1fr); margin: 0; padding: 5px 14px; background: white; border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 5px 18px rgba(35,48,64,.04); }
   .event-meta > div, .event-meta > div:first-child, .event-meta > div:last-child { min-height: 49px; display: flex; align-items: center; padding: 10px 0; }
-  .event-meta p { width: 100%; }
+  .event-meta p { width: 100%; min-width: 0; gap: 12px; }
   .event-meta small { font-size: 10px; }
-  .event-meta strong { max-width: 66%; font-size: 13px; text-align: right; white-space: normal; }
+  .event-meta strong { min-width: 0; max-width: 66%; overflow-wrap: anywhere; font-size: 13px; text-align: right; white-space: normal; }
   .price-line { min-height: 55px; margin-top: 10px; padding: 12px 14px; }
   .price-line span { font-size: 13px; }
   .price-line strong { font-size: 21px; }
-  .poster-card { height: 330px; margin: 14px 0 0; border-radius: 12px; }
+  .poster-card { width: 100%; max-width: 100%; height: clamp(380px, 122vw, 500px); margin: 14px 0 0; border-radius: 12px; }
   .mobile-register-button { display: flex; width: 100%; min-height: 56px; align-items: center; justify-content: center; gap: 11px; color: white; background: var(--coral); border: 0; border-radius: 10px; box-shadow: 0 10px 24px rgba(22,121,196,.2); font-size: 15px; font-weight: 700; cursor: pointer; }
+  .registration-aside > .mobile-register-button { margin-top: 14px; }
   .mobile-register-button span { font-size: 19px; }
   body.mobile-form-open .mobile-register-button,
   body.registration-is-closed .mobile-register-button { display: none; }
@@ -1988,7 +1991,7 @@ footer a {
   body.registration-is-closed .registration-grid .form-card { display: block; }
   body.registration-is-closed .registration-grid .form-card { order: -1; }
   body.registration-is-closed .registration-grid .registration-aside { order: 1; }
-  .form-card { width: 100%; min-height: 0; margin: 0; padding: 24px 16px; border: 1px solid #e5e8ec; border-radius: 14px; box-shadow: 0 10px 30px rgba(28,42,60,.08); }
+  .form-card { width: 100%; min-width: 0; min-height: 0; margin: 0; padding: 24px 16px; scroll-margin-top: 82px; border: 1px solid #e5e8ec; border-radius: 14px; box-shadow: 0 10px 30px rgba(28,42,60,.08); }
   .form-card-head { align-items: center; margin-bottom: 22px; padding-bottom: 18px; }
   .form-card h2 { font-size: 23px; line-height: 1.2; }
   .form-card-head p { font-size: 11px; }
@@ -2014,4 +2017,11 @@ footer a {
   footer p { font-size: 10px; text-align: center; }
   .footer-end { flex-direction: column; gap: 9px; }
   .admin-entry { display: none; }
+}
+
+@media (max-width: 360px) {
+  .registration-grid { padding-inline: 12px; }
+  .registration-aside h1 { font-size: 27px; }
+  .brand-copy strong { font-size: 11px; }
+  .form-card { padding-inline: 13px; }
 }
