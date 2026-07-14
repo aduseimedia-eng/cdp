@@ -74,6 +74,7 @@ function closeMobileSelectionSheet({ returnFocus = true } = {}) {
   mobileSelectionSheet.hidden = true;
   document.body.classList.remove('selection-sheet-open');
   const trigger = mobileSelectTrigger;
+  trigger?.setAttribute('aria-expanded', 'false');
   activeMobileSelect = null;
   mobileSelectTrigger = null;
   if (returnFocus && trigger?.isConnected) trigger.focus({ preventScroll: true });
@@ -87,14 +88,28 @@ function selectMobileOption(option) {
   closeMobileSelectionSheet();
 }
 
-function openMobileSelectionSheet(select) {
+function getSelectLabel(select) {
   const field = select.closest('.field');
-  const label = field?.querySelector('span')?.textContent.replace(/\*/g, '').trim() || 'Choose an option';
+  return field?.querySelector('span')?.textContent.replace(/\*/g, '').trim() || 'Choose an option';
+}
+
+function updateMobileSelectTrigger(select) {
+  const trigger = select.parentElement?.querySelector(`.mobile-select-trigger[data-select-name="${select.name}"]`);
+  if (!trigger) return;
+  const selectedOption = select.options[select.selectedIndex];
+  const isPlaceholder = !select.value && select.name !== 'title';
+  trigger.querySelector('.mobile-select-trigger-value').textContent = selectedOption?.textContent || getSelectLabel(select);
+  trigger.classList.toggle('is-placeholder', isPlaceholder);
+}
+
+function openMobileSelectionSheet(select, trigger = select) {
+  const label = getSelectLabel(select);
   const options = [...select.options].filter((option) => option.value || select.name === 'title');
   if (!options.length) return;
 
   activeMobileSelect = select;
-  mobileSelectTrigger = select;
+  mobileSelectTrigger = trigger;
+  trigger.setAttribute('aria-expanded', 'true');
   selectionSheetTitle.textContent = label;
   selectionSheetOptions.replaceChildren();
 
@@ -124,16 +139,21 @@ function openMobileSelectionSheet(select) {
 }
 
 form.querySelectorAll('select').forEach((select) => {
-  select.addEventListener('pointerdown', (event) => {
-    if (!isMobileSelectionView()) return;
-    event.preventDefault();
-    openMobileSelectionSheet(select);
+  select.classList.add('mobile-select-control');
+  const trigger = document.createElement('button');
+  trigger.className = 'mobile-select-trigger';
+  trigger.type = 'button';
+  trigger.dataset.selectName = select.name;
+  trigger.setAttribute('aria-label', getSelectLabel(select));
+  trigger.setAttribute('aria-haspopup', 'listbox');
+  trigger.setAttribute('aria-expanded', 'false');
+  trigger.innerHTML = '<span class="mobile-select-trigger-value"></span><span class="mobile-select-trigger-arrow" aria-hidden="true">⌄</span>';
+  select.insertAdjacentElement('afterend', trigger);
+  trigger.addEventListener('click', () => {
+    if (isMobileSelectionView()) openMobileSelectionSheet(select, trigger);
   });
-  select.addEventListener('keydown', (event) => {
-    if (!isMobileSelectionView() || !['Enter', ' ', 'ArrowDown'].includes(event.key)) return;
-    event.preventDefault();
-    openMobileSelectionSheet(select);
-  });
+  select.addEventListener('change', () => updateMobileSelectTrigger(select));
+  updateMobileSelectTrigger(select);
 });
 
 mobileSelectionSheet.querySelectorAll('[data-close-selection-sheet]').forEach((button) => {
@@ -176,7 +196,7 @@ function validateStep(stepNumber) {
   }
 
   if (!valid) {
-    const invalidElement = step.querySelector('.invalid input, .invalid select');
+    const invalidElement = step.querySelector('.invalid input, .invalid .mobile-select-trigger, .invalid select');
     invalidElement?.focus();
   }
   return valid;
@@ -347,6 +367,7 @@ function updatePaymentDisplay(config, selectedMethod, selectedBankId = '') {
     });
     selectedBank = config.bankAccounts.find((bank) => bank.id === requestedBankId) || config.bankAccounts[0];
     bankSelect.value = selectedBank?.id || '';
+    updateMobileSelectTrigger(bankSelect);
   }
 
   if (!selectedMethod) return;

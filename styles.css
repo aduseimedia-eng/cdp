@@ -1661,6 +1661,17 @@ body.selection-sheet-open { overflow: hidden; }
   .selection-sheet-option { min-height: 51px; font-size: 14px; }
 }
 
+@media (max-width: 640px) {
+  .field .mobile-select-control { display: none; }
+  .field .mobile-select-trigger { width: 100%; height: 52px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 14px; color: var(--ink); background: var(--white); border: 1px solid #d7dbe2; border-radius: 9px; font: inherit; font-size: 16px; text-align: left; cursor: pointer; }
+  .field .mobile-select-trigger.is-placeholder { color: #9da4b0; }
+  .field .mobile-select-trigger:focus-visible { border-color: var(--navy-soft); box-shadow: 0 0 0 3px rgba(37, 52, 82, .1); outline: 0; }
+  .field.invalid .mobile-select-trigger { border-color: var(--danger); }
+  .mobile-select-trigger-value { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .mobile-select-trigger-arrow { color: #6f7c90; font-size: 20px; line-height: 1; }
+  .registration-only-page .field .mobile-select-trigger { height: 50px; }
+}
+
 /* Closed registration becomes a focused, standalone notice. */
 body.registration-is-closed { background: #0d1d3b; }
 
