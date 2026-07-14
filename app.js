@@ -170,13 +170,28 @@ receiptInput.addEventListener('change', () => {
 const copyButton = document.querySelector('.copy-button');
 if (copyButton) {
   copyButton.addEventListener('click', async (event) => {
-    const value = event.currentTarget.dataset.copy;
+    const button = event.currentTarget;
+    const value = button.dataset.copy;
+    if (!value) return;
     try {
       await navigator.clipboard.writeText(value);
-      showToast('Payment number copied');
     } catch {
-      showToast(`Copy this number: ${value}`);
+      const temporaryInput = document.createElement('textarea');
+      temporaryInput.value = value;
+      temporaryInput.style.position = 'fixed';
+      temporaryInput.style.opacity = '0';
+      document.body.append(temporaryInput);
+      temporaryInput.select();
+      const copied = document.execCommand('copy');
+      temporaryInput.remove();
+      if (!copied) {
+        showToast(`Copy this number: ${value}`);
+        return;
+      }
     }
+    button.classList.add('copied');
+    showToast('Payment number copied');
+    window.setTimeout(() => button.classList.remove('copied'), 1200);
   });
 }
 
@@ -246,7 +261,15 @@ function updatePaymentDisplay(config, selectedMethod, selectedBankId = '') {
   setText('#paymentProviderValue', isBank ? [selectedBank?.bankName, selectedBank?.branch].filter(Boolean).join(' · ') : config.momoNetwork);
   setText('#paymentMerchant', isBank ? selectedBank?.accountName : config.momoAccountName);
   setText('#paymentAccountLabel', isBank ? 'Account number' : 'MoMo number');
-  setText('#paymentInstructions', isBank ? selectedBank?.accountNumber : config.momoNumber);
+  const paymentNumber = String(isBank ? selectedBank?.accountNumber || '' : config.momoNumber || '').trim();
+  setText('#paymentInstructions', paymentNumber);
+  if (copyButton) {
+    const canCopy = Boolean(paymentNumber) && !/^(use|see)\b/i.test(paymentNumber);
+    copyButton.dataset.copy = canCopy ? paymentNumber : '';
+    copyButton.hidden = !canCopy;
+    copyButton.setAttribute('aria-label', isBank ? 'Copy bank account number' : 'Copy MoMo number');
+    copyButton.title = isBank ? 'Copy bank account number' : 'Copy MoMo number';
+  }
   document.querySelector('#paymentPhoneField').hidden = isBank;
   document.querySelector('#paymentPhoneInput').required = !isBank;
 }

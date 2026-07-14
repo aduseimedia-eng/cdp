@@ -771,17 +771,17 @@ h1 em {
   font-weight: 700;
 }
 
-.copy-button {
-  margin-left: 5px;
-  padding: 2px 6px;
-  color: var(--navy);
-  background: rgba(255, 255, 255, 0.55);
-  border: 1px solid rgba(20, 33, 61, 0.14);
-  border-radius: 4px;
-  font-size: 7px;
-  font-weight: 800;
-  cursor: pointer;
-}
+.copy-payment-value { display: inline-flex; align-items: center; justify-content: flex-end; gap: 7px; }
+
+.copy-payment-value > span { min-width: 0; overflow-wrap: anywhere; }
+
+.copy-button { width: 30px; height: 30px; display: inline-grid; flex: 0 0 auto; padding: 0; place-items: center; color: #0d63a5; background: rgba(255,255,255,.82); border: 1px solid rgba(22,121,196,.24); border-radius: 7px; cursor: pointer; transition: .18s ease; }
+
+.copy-button:hover { color: white; background: #1679c4; border-color: #1679c4; }
+
+.copy-button.copied { color: white; background: #23806f; border-color: #23806f; transform: scale(.94); }
+
+.copy-button svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 
 .upload-field input {
   position: absolute;
