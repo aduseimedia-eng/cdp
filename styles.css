@@ -1619,6 +1619,36 @@ footer p { font-size: 10px; }
 .registration-only-page .form-card-head .step-label,
 .registration-only-page .form-progress span.active { color: #9ce0b5; background: #62bd85; }
 
+/* Mobile public page: compact service-portal card layout. */
+@media (max-width: 640px) {
+  body.public-page { background: #ffffff; }
+  .public-page .site-header { position: fixed; color: #17261c; background: rgba(255,255,255,.98); border-bottom: 1px solid #e3e9e4; box-shadow: none; }
+  .public-page .nav-wrap { height: 70px; }
+  .public-page .brand-mark { width: 42px; background: #fff; border: 1px solid #e3e9e4; border-radius: 11px; box-shadow: none; }
+  .public-page .brand-copy strong { color: #17261c; font-size: 13px; }
+  .public-page .brand-copy small { color: #758078; }
+  .public-page .registration-section { padding: 91px 0 26px; background: #ffffff; }
+  .public-page .registration-grid { gap: 20px; padding: 18px 20px 24px; background: #ffffff; }
+  .public-page .registration-aside { padding: 0; }
+  .public-page .eyebrow { margin-bottom: 9px; color: #369c64; font-size: 9px; }
+  .public-page .registration-aside h1 { font-size: 28px; font-weight: 650; letter-spacing: -.035em; line-height: 1.15; }
+  .public-page .intro { margin: 10px 0 20px; color: #667169; font-size: 13px; line-height: 1.6; }
+  .public-page .event-meta { gap: 0; padding: 0 14px; background: #fff; border: 1px solid #e0e7e1; border-radius: 12px; box-shadow: 0 5px 16px rgba(28,63,41,.04); }
+  .public-page .event-meta > div,
+  .public-page .event-meta > div:first-child,
+  .public-page .event-meta > div:last-child { min-height: 52px; padding: 9px 0; border-bottom: 1px solid #edf1ee; border-right: 0; }
+  .public-page .event-meta > div:last-child { border-bottom: 0; }
+  .public-page .event-meta p { flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; }
+  .public-page .event-meta small { color: #6c7970; font-size: 9px; letter-spacing: .08em; }
+  .public-page .event-meta strong { max-width: 66%; color: #1d2e23; font-size: 13px; text-align: right; }
+  .public-page .price-line { min-height: 56px; margin-top: 11px; padding: 12px 14px; background: #eff9f2; border-color: #d9eee0; border-radius: 11px; }
+  .public-page .price-line span { color: #536158; font-size: 12px; }
+  .public-page .price-line strong { color: #278650; font-size: 20px; }
+  .public-page .mobile-register-button { min-height: 54px; margin-top: 15px; color: #fff; background: #369c64; border-radius: 10px; box-shadow: none; font-size: 14px; }
+  .public-page .poster-card { height: clamp(300px, 92vw, 420px); margin-top: 16px; background: #fff; border: 1px solid #e0e7e1; border-radius: 12px; box-shadow: none; }
+  .public-page footer { background: #fff; border-top: 1px solid #e5ebe6; }
+}
+
 /* Touch-friendly mobile selection sheet for registration dropdowns. */
 body.selection-sheet-open { overflow: hidden; }
 
