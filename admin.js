@@ -408,9 +408,10 @@ function renderRegistrations(searchTerm = '') {
   const body = document.querySelector('#registrationsTable');
   body.replaceChildren();
   const term = searchTerm.trim().toLowerCase();
+  const statusFilter = document.querySelector('#registrationStatusFilter')?.value || 'All';
   const filtered = registrations.filter((item) => {
     const haystack = `${item.title || ''} ${item.firstName} ${item.lastName} ${item.email} ${item.organization || ''} ${item.whatsapp} ${item.reference} ${item.transactionId}`.toLowerCase();
-    return haystack.includes(term);
+    return haystack.includes(term) && (statusFilter === 'All' || item.status === statusFilter);
   });
 
   if (!filtered.length) {
@@ -640,6 +641,7 @@ document.querySelector('#showChangePasswords').addEventListener('change', (event
 });
 document.querySelector('#adminDescription').addEventListener('input', updateDescriptionCount);
 document.querySelector('#registrationSearch').addEventListener('input', (event) => renderRegistrations(event.target.value));
+document.querySelector('#registrationStatusFilter').addEventListener('change', () => renderRegistrations(document.querySelector('#registrationSearch').value));
 document.querySelector('#exportButton').addEventListener('click', exportCsv);
 document.querySelector('#addBankButton').addEventListener('click', () => addBankAccountEditor());
 document.querySelector('#cancelDeleteButton').addEventListener('click', closeDeleteModal);
