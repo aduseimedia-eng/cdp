@@ -2323,6 +2323,32 @@ footer a {
 .public-page .brand-copy strong { color: var(--ink); }
 .public-page .brand-copy small { color: var(--muted); }
 
+/* Mobile palette overrides follow all registration-page legacy rules above. */
+@media (max-width: 640px) {
+  body.public-page,
+  body.registration-only-page { background: #fff; }
+  .public-page .site-header,
+  .registration-only-page .site-header { position: fixed; color: #17261c; background: rgba(255,255,255,.98); border-bottom: 1px solid #e3e9e4; box-shadow: none; }
+  .public-page .brand-copy strong,
+  .registration-only-page .brand-copy strong { color: #17261c; }
+  .public-page .brand-copy small,
+  .registration-only-page .brand-copy small { color: #758078; }
+  .public-page .registration-section,
+  .registration-only-section { background: #fff; }
+  .registration-only-section { min-height: calc(100vh - 70px); padding: 70px 0 26px; }
+  .registration-only-page .form-card { padding: 0 20px 30px; background: #fff; }
+  .registration-only-page .form-card-head { margin: 0 -20px 23px; padding: 24px 20px 19px; color: #17261c; background: #fff; border-bottom: 1px solid #e5ebe6; }
+  .registration-only-page .form-card-head .step-label { color: #369c64; }
+  .registration-only-page .form-card-head h2 { color: #17261c; font-size: 24px; }
+  .registration-only-page .form-card-head p { color: #6d7870; }
+  .registration-only-page .form-progress span { background: #e0e8e2; }
+  .registration-only-page .form-progress span.active { background: #369c64; }
+  .registration-only-page .field input,
+  .registration-only-page .field select,
+  .registration-only-page .phone-input { background: #fafcfb; border-color: #e0e7e1; }
+  .registration-only-page .button-accent { background: #369c64; box-shadow: none; }
+}
+
 @media (max-width: 640px) {
   .public-page .site-header {
     background: rgba(255,255,255,.97);
