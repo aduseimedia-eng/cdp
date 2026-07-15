@@ -64,7 +64,13 @@ app.post('/api/admin/login', async (req, res, next) => { try {
   if (!process.env.JWT_SECRET) return res.status(503).json({ error: 'Admin access is not configured.' });
   const stored = await pool.query('SELECT password_hash FROM admin_credentials WHERE id = TRUE');
   if (!stored.rowCount) return res.status(503).json({ error: 'Admin access is not configured.' });
-  if (!await passwordMatches(clean(req.body.password, 512), stored.rows[0].password_hash)) return res.status(401).json({ error: 'Incorrect password.' });
+  const password = clean(req.body.password, 512);
+  let validPassword = await passwordMatches(password, stored.rows[0].password_hash);
+  if (!validPassword && process.env.ADMIN_PASSWORD && password === process.env.ADMIN_PASSWORD) {
+    await pool.query('UPDATE admin_credentials SET password_hash = $1 WHERE id = TRUE', [await hashPassword(password)]);
+    validPassword = true;
+  }
+  if (!validPassword) return res.status(401).json({ error: 'Incorrect password.' });
   res.json({ token: jwt.sign({ role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '8h' }) });
 } catch (e) { next(e); } });
 app.put('/api/admin/password', adminOnly, async (req, res, next) => { try {
