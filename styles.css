@@ -1647,6 +1647,26 @@ footer p { font-size: 10px; }
   .public-page .mobile-register-button { min-height: 54px; margin-top: 15px; color: #fff; background: #369c64; border-radius: 10px; box-shadow: none; font-size: 14px; }
   .public-page .poster-card { height: clamp(300px, 92vw, 420px); margin-top: 16px; background: #fff; border: 1px solid #e0e7e1; border-radius: 12px; box-shadow: none; }
   .public-page footer { background: #fff; border-top: 1px solid #e5ebe6; }
+
+  .registration-only-page { background: #fff; }
+  .registration-only-page .site-header { color: #17261c; background: rgba(255,255,255,.98); border-bottom: 1px solid #e3e9e4; box-shadow: none; }
+  .registration-only-page .brand-copy strong { color: #17261c; }
+  .registration-only-page .brand-copy small { color: #758078; }
+  .registration-only-section { min-height: calc(100vh - 70px); padding: 70px 0 26px; background: #fff; }
+  .registration-only-page .form-card { padding: 0 20px 30px; background: #fff; border: 0; border-radius: 0; box-shadow: none; }
+  .registration-only-page .form-card-head { margin: 0 -20px 23px; padding: 24px 20px 19px; color: #17261c; background: #fff; border-bottom: 1px solid #e5ebe6; }
+  .registration-only-page .form-card-head .step-label { color: #369c64; background: transparent; }
+  .registration-only-page .form-card-head h2 { color: #17261c; font-size: 24px; }
+  .registration-only-page .form-card-head p { color: #6d7870; }
+  .registration-only-page .form-progress span { background: #e0e8e2; }
+  .registration-only-page .form-progress span.active { background: #369c64; }
+  .registration-only-page .field input,
+  .registration-only-page .field select,
+  .registration-only-page .phone-input { background: #fafcfb; border-color: #e0e7e1; }
+  .registration-only-page .field input:focus,
+  .registration-only-page .field select:focus { border-color: #369c64; box-shadow: 0 0 0 3px rgba(54,156,100,.12); }
+  .registration-only-page .button-accent { background: #369c64; box-shadow: none; }
+  .registration-only-page .button-secondary { background: #fff; border-color: #dfe7e1; }
 }
 
 /* Touch-friendly mobile selection sheet for registration dropdowns. */
