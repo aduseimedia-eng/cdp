@@ -2330,8 +2330,12 @@ footer a {
   body.registration-only-page { background: #fff; }
   .public-page .site-header,
   .registration-only-page .site-header { position: fixed; color: #17261c; background: rgba(255,255,255,.98); border-bottom: 1px solid #e3e9e4; box-shadow: none; }
+  .public-page .brand,
+  .registration-only-page .brand { min-width: 0; flex: 1; }
+  .public-page .brand-mark,
+  .registration-only-page .brand-mark { width: 48px; height: 48px; }
   .public-page .brand-copy strong,
-  .registration-only-page .brand-copy strong { color: #17261c; }
+  .registration-only-page .brand-copy strong { max-width: none; overflow: visible; color: #17261c; font-size: 13px; text-overflow: clip; white-space: nowrap; }
   .public-page .brand-copy small,
   .registration-only-page .brand-copy small { color: #758078; }
   .public-page .registration-section,
