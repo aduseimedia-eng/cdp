@@ -1,8 +1,6 @@
 const CONFIG_KEY = 'iodCdpConfig';
 const REGISTRATIONS_KEY = 'iodCdpRegistrations';
 const AUTH_SESSION_KEY = 'iodCdpAdminAuthenticated';
-const ADMIN_PASSWORD_HASH_KEY = 'iodCdpAdminPasswordHash';
-const DEFAULT_ADMIN_PASSWORD_HASH = 'a34c7305af5b1b2cea20ff1591696acf02402faf4f4f38400ab36c421b11fe81';
 const MAX_LOGIN_ATTEMPTS = 5;
 const LOCKOUT_DURATION = 30000;
 
@@ -69,16 +67,6 @@ let failedLoginAttempts = 0;
 let lockedUntil = 0;
 let pendingDeletion = null;
 let deleteTrigger = null;
-
-async function hashPassword(value) {
-  const bytes = new TextEncoder().encode(value);
-  const digest = await crypto.subtle.digest('SHA-256', bytes);
-  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('');
-}
-
-function getAdminPasswordHash() {
-  return localStorage.getItem(ADMIN_PASSWORD_HASH_KEY) || DEFAULT_ADMIN_PASSWORD_HASH;
-}
 
 function revealDashboard() {
   document.querySelector('#loginScreen').hidden = true;
@@ -701,7 +689,6 @@ window.addEventListener('storage', (event) => {
     registrations = readJson(REGISTRATIONS_KEY, []);
     updateDashboard();
   }
-  if (event.key === ADMIN_PASSWORD_HASH_KEY) logout();
 });
 
 populateForms();
