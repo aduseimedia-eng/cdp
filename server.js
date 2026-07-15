@@ -31,12 +31,13 @@ async function initialise() {
   await pool.query(`CREATE TABLE IF NOT EXISTS app_config (id BOOLEAN PRIMARY KEY DEFAULT TRUE, value JSONB NOT NULL, updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW());
     CREATE TABLE IF NOT EXISTS registrations (
       id BIGSERIAL PRIMARY KEY, reference TEXT UNIQUE NOT NULL, title TEXT, first_name TEXT NOT NULL, last_name TEXT NOT NULL,
-      email TEXT NOT NULL, organization TEXT NOT NULL, whatsapp TEXT NOT NULL, role TEXT NOT NULL, network TEXT NOT NULL,
+      email TEXT NOT NULL, organization TEXT NOT NULL, whatsapp TEXT NOT NULL, role TEXT NOT NULL, role_other TEXT, network TEXT NOT NULL,
       bank_account_id TEXT, payment_provider TEXT, payment_phone TEXT, transaction_id TEXT NOT NULL, receipt_name TEXT,
       receipt_mime TEXT, receipt_data BYTEA, status TEXT NOT NULL DEFAULT 'Pending' CHECK (status IN ('Pending','Verified')),
       submitted_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     );
-    CREATE TABLE IF NOT EXISTS admin_credentials (id BOOLEAN PRIMARY KEY DEFAULT TRUE, password_hash TEXT NOT NULL);`);
+    CREATE TABLE IF NOT EXISTS admin_credentials (id BOOLEAN PRIMARY KEY DEFAULT TRUE, password_hash TEXT NOT NULL);
+    ALTER TABLE registrations ADD COLUMN IF NOT EXISTS role_other TEXT;`);
   await pool.query('INSERT INTO app_config (id, value) VALUES (TRUE, $1) ON CONFLICT (id) DO NOTHING', [DEFAULT_CONFIG]);
   const existingAdmin = await pool.query('SELECT 1 FROM admin_credentials WHERE id = TRUE');
   if (!existingAdmin.rowCount && process.env.ADMIN_PASSWORD) await pool.query('INSERT INTO admin_credentials (id, password_hash) VALUES (TRUE, $1)', [await hashPassword(process.env.ADMIN_PASSWORD)]);
@@ -56,8 +57,8 @@ app.post('/api/registrations', upload.single('receipt'), async (req, res, next) 
   const bank = current.bankAccounts.find((item) => item.id === req.body.bankAccount);
   const paymentProvider = req.body.network === 'Bank transfer' ? (bank?.bankName || 'Bank transfer') : current.momoNetwork;
   const suppliedReference = clean(req.body.reference, 40);
-  const values = [/^IOD-CDP-[A-Z0-9-]+$/.test(suppliedReference) ? suppliedReference : reference(), clean(req.body.title, 30), clean(req.body.firstName), clean(req.body.lastName), clean(req.body.email), clean(req.body.organization), clean(req.body.whatsapp, 15), clean(req.body.role), clean(req.body.network), clean(req.body.bankAccount, 100), clean(paymentProvider), clean(req.body.paymentPhone, 30), clean(req.body.transactionId, 100), req.file?.originalname?.slice(0, 255) || null, req.file?.mimetype || null, req.file?.buffer || null];
-  const result = await pool.query(`INSERT INTO registrations (reference,title,first_name,last_name,email,organization,whatsapp,role,network,bank_account_id,payment_provider,payment_phone,transaction_id,receipt_name,receipt_mime,receipt_data) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16) RETURNING reference, submitted_at`, values);
+  const values = [/^IOD-CDP-[A-Z0-9-]+$/.test(suppliedReference) ? suppliedReference : reference(), clean(req.body.title, 30), clean(req.body.firstName), clean(req.body.lastName), clean(req.body.email), clean(req.body.organization), clean(req.body.whatsapp, 15), clean(req.body.role), clean(req.body.roleOther, 255), clean(req.body.network), clean(req.body.bankAccount, 100), clean(paymentProvider), clean(req.body.paymentPhone, 30), clean(req.body.transactionId, 100), req.file?.originalname?.slice(0, 255) || null, req.file?.mimetype || null, req.file?.buffer || null];
+  const result = await pool.query(`INSERT INTO registrations (reference,title,first_name,last_name,email,organization,whatsapp,role,role_other,network,bank_account_id,payment_provider,payment_phone,transaction_id,receipt_name,receipt_mime,receipt_data) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17) RETURNING reference, submitted_at`, values);
   res.status(201).json({ reference: result.rows[0].reference, submittedAt: result.rows[0].submitted_at });
 } catch (e) { next(e); } });
 app.post('/api/admin/login', async (req, res, next) => { try {
@@ -81,7 +82,7 @@ app.put('/api/admin/password', adminOnly, async (req, res, next) => { try {
   await pool.query('UPDATE admin_credentials SET password_hash = $1 WHERE id = TRUE', [await hashPassword(nextPassword)]); res.status(204).end();
 } catch (e) { next(e); } });
 app.get('/api/admin/registrations', adminOnly, async (_req, res, next) => { try {
-  const { rows } = await pool.query(`SELECT reference, title, first_name AS "firstName", last_name AS "lastName", email, organization, whatsapp, role, network, bank_account_id AS "bankAccountId", payment_provider AS "paymentProvider", payment_phone AS "paymentPhone", transaction_id AS "transactionId", receipt_name AS "receiptName", status, submitted_at AS "submittedAt" FROM registrations ORDER BY submitted_at DESC`); res.json(rows);
+  const { rows } = await pool.query(`SELECT reference, title, first_name AS "firstName", last_name AS "lastName", email, organization, whatsapp, role, role_other AS "roleOther", network, bank_account_id AS "bankAccountId", payment_provider AS "paymentProvider", payment_phone AS "paymentPhone", transaction_id AS "transactionId", receipt_name AS "receiptName", status, submitted_at AS "submittedAt" FROM registrations ORDER BY submitted_at DESC`); res.json(rows);
 } catch (e) { next(e); } });
 app.patch('/api/admin/registrations/:reference', adminOnly, async (req, res, next) => { try {
   const status = req.body.status; if (!['Pending', 'Verified'].includes(status)) return res.status(400).json({ error: 'Invalid status.' });

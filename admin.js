@@ -410,7 +410,7 @@ function renderRegistrations(searchTerm = '') {
   const term = searchTerm.trim().toLowerCase();
   const statusFilter = document.querySelector('#registrationStatusFilter')?.value || 'All';
   const filtered = registrations.filter((item) => {
-    const haystack = `${item.title || ''} ${item.firstName} ${item.lastName} ${item.email} ${item.organization || ''} ${item.whatsapp} ${item.reference} ${item.transactionId}`.toLowerCase();
+    const haystack = `${item.title || ''} ${item.firstName} ${item.lastName} ${item.email} ${item.organization || ''} ${item.roleOther || ''} ${item.whatsapp} ${item.reference} ${item.transactionId}`.toLowerCase();
     return haystack.includes(term) && (statusFilter === 'All' || item.status === statusFilter);
   });
 
@@ -615,8 +615,8 @@ function exportCsv() {
     showToast('There are no registrations to export');
     return;
   }
-  const headings = ['Reference', 'Title', 'First name', 'Last name', 'Organization', 'Email', 'WhatsApp', 'Role', 'Payment method', 'Payment provider', 'Payment phone', 'Transaction ID', 'Status', 'Submitted'];
-  const lines = registrations.map((item) => [item.reference, item.title, item.firstName, item.lastName, item.organization, item.email, item.whatsapp, item.role, item.network, item.paymentProvider, item.paymentPhone, item.transactionId, item.status, item.submittedAt].map(csvCell).join(','));
+  const headings = ['Reference', 'Title', 'First name', 'Last name', 'Organization', 'Email', 'WhatsApp', 'Role', 'Other role detail', 'Payment method', 'Payment provider', 'Payment phone', 'Transaction ID', 'Status', 'Submitted'];
+  const lines = registrations.map((item) => [item.reference, item.title, item.firstName, item.lastName, item.organization, item.email, item.whatsapp, item.role, item.roleOther, item.network, item.paymentProvider, item.paymentPhone, item.transactionId, item.status, item.submittedAt].map(csvCell).join(','));
   const blob = new Blob([[headings.map(csvCell).join(','), ...lines].join('\n')], { type: 'text/csv;charset=utf-8' });
   const link = document.createElement('a');
   link.href = URL.createObjectURL(blob);

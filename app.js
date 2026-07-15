@@ -202,6 +202,15 @@ function validateStep(stepNumber) {
   return valid;
 }
 
+function updateOtherRoleField() {
+  const otherField = document.querySelector('#roleOtherField');
+  const otherInput = form.elements.roleOther;
+  const isOther = form.elements.role.value === 'Other';
+  if (!otherField || !otherInput) return;
+  otherField.hidden = !isOther;
+  if (!isOther) otherInput.value = '';
+}
+
 function setStep(stepNumber, shouldScroll = true) {
   currentStep = stepNumber;
   steps.forEach((step) => step.classList.toggle('active', Number(step.dataset.step) === stepNumber));
@@ -251,6 +260,8 @@ function restoreRegistrationDraft() {
 continueButton.addEventListener('click', () => {
   if (validateStep(1)) setStep(2);
 });
+
+form.elements.role.addEventListener('change', updateOtherRoleField);
 
 backButton.addEventListener('click', () => setStep(1));
 
@@ -532,6 +543,7 @@ if (yearElement) yearElement.textContent = new Date().getFullYear();
 applyPublicConfig();
 refreshConfig();
 restoreRegistrationDraft();
+updateOtherRoleField();
 window.addEventListener('storage', (event) => {
   if (event.key === CONFIG_KEY) applyPublicConfig();
 });

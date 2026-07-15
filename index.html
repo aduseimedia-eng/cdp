@@ -73,6 +73,7 @@
               <label class="field"><span>Organization *</span><input type="text" name="organization" autocomplete="organization" placeholder="Your organization or company" required><small class="error-text">Enter your organization.</small></label>
               <label class="field"><span>WhatsApp number *</span><div class="phone-input"><span>🇬🇭 +233</span><input type="tel" name="whatsapp" autocomplete="tel-national" inputmode="numeric" placeholder="240000000" pattern="[0-9]{9,10}" minlength="9" maxlength="10" required></div><small class="field-help">Enter 9 or 10 digits. Your joining link will be sent to this number.</small><small class="error-text">Enter a valid 9 or 10-digit WhatsApp number.</small></label>
               <label class="field"><span>You are a... *</span><select name="role" required><option value="">Select an option</option><option>Business owner / founder</option><option>Professional / employee</option><option>Freelancer / consultant</option><option>Student / aspiring founder</option><option>Other</option></select><small class="error-text">Select an option.</small></label>
+              <label class="field" id="roleOtherField" hidden><span>Please specify <small>(optional)</small></span><input type="text" name="roleOther" placeholder="Tell us a little more about your role"></label>
               <label class="check-field"><input type="checkbox" name="whatsappConsent" required><span>I agree to receive registration updates and my joining link via WhatsApp. *</span></label>
               <small class="error-text check-error">Please agree so we can send your access link.</small>
               <button class="button button-accent button-full" type="button" id="continueButton">Continue to payment <span aria-hidden="true">→</span></button>
@@ -116,6 +117,6 @@
 
   <footer><div class="container"><p>© <span id="year"></span> Institute of Directors-Ghana</p><div class="footer-end"><p>CDP registration and payment confirmation</p><a class="admin-entry" href="admin.html" aria-label="Open admin dashboard" title="Admin dashboard">Admin</a></div></div></footer>
   <div class="toast" id="toast" role="status" aria-live="polite">Copied</div>
-  <script src="app.js?v=20260714-7"></script>
+  <script src="app.js?v=20260715-1"></script>
 </body>
 </html>
