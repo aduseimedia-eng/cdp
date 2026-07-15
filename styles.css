@@ -1671,6 +1671,7 @@ footer p { font-size: 10px; }
 
 /* Touch-friendly mobile selection sheet for registration dropdowns. */
 body.selection-sheet-open { overflow: hidden; }
+.mobile-select-trigger { display: none; }
 
 .selection-sheet { position: fixed; inset: 0; z-index: 40; display: grid; align-items: end; }
 
