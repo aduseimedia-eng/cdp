@@ -50,7 +50,7 @@ app.put('/api/config', adminOnly, async (req, res, next) => { try {
 } catch (e) { next(e); } });
 app.post('/api/registrations', upload.single('receipt'), async (req, res, next) => { try {
   const current = await config(); if (!current.registrationOpen) return res.status(403).json({ error: 'Registration is currently closed.' });
-  const required = ['firstName', 'lastName', 'email', 'organization', 'whatsapp', 'role', 'network', 'transactionId'];
+  const required = ['firstName', 'lastName', 'email', 'organization', 'whatsapp', 'role', 'network'];
   if (required.some((key) => !clean(req.body[key]))) return res.status(400).json({ error: 'Please complete all required fields.' });
   if (!/^\S+@\S+\.\S+$/.test(clean(req.body.email))) return res.status(400).json({ error: 'Enter a valid email address.' });
   const bank = current.bankAccounts.find((item) => item.id === req.body.bankAccount);
