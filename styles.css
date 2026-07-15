@@ -1734,24 +1734,24 @@ body.registration-is-closed .closed-state { padding: 58px 30px; }
 
 /* Light public-page theme inspired by the approved layout reference. */
 :root {
-  --navy: #17243a;
-  --navy-deep: #101a2b;
-  --navy-soft: #2d3d56;
-  --ivory: #f5f6f8;
+  --navy: #1d2b24;
+  --navy-deep: #14211a;
+  --navy-soft: #34463b;
+  --ivory: #f6f8f6;
   --white: #ffffff;
-  --ink: #111b2e;
-  --muted: #78818f;
-  --coral: #1679c4;
-  --coral-dark: #0d63a5;
-  --teal: #1d8bd4;
-  --teal-soft: #e7f4fc;
-  --line: #e2e6eb;
-  --shadow: 0 24px 65px rgba(31, 44, 61, 0.12);
+  --ink: #17231c;
+  --muted: #6e7772;
+  --coral: #369c64;
+  --coral-dark: #277e50;
+  --teal: #44a96f;
+  --teal-soft: #eaf7ee;
+  --line: #e0e7e1;
+  --shadow: 0 24px 65px rgba(32, 58, 42, 0.12);
 }
 
 body {
   color: var(--ink);
-  background: #eef1f4;
+  background: #f4f7f5;
 }
 
 .site-header {
@@ -1786,7 +1786,7 @@ body {
   min-height: calc(100vh - 62px);
   padding: 105px 0 42px;
   color: var(--ink);
-  background: #eef1f4;
+  background: #f4f7f5;
 }
 
 .registration-section::before,
@@ -1798,7 +1798,7 @@ body {
   grid-template-columns: minmax(0, 1fr) minmax(470px, 0.82fr);
   gap: clamp(50px, 7vw, 92px);
   padding: 58px 64px;
-  background: #f7f7f9;
+  background: #f9fbf9;
   border: 1px solid rgba(255, 255, 255, 0.85);
   border-radius: 28px;
   box-shadow:
@@ -2257,24 +2257,20 @@ footer a {
 
 /* Shared navy navigation for the public landing page. */
 .public-page .site-header {
-  color: var(--white);
-  background:
-    radial-gradient(circle at 15% 5%, rgba(61, 102, 166, 0.42), transparent 32%),
-    linear-gradient(165deg, #172b50 0%, #0f1d38 48%, #081326 100%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 7px 24px rgba(6, 16, 34, 0.18);
+  color: var(--ink);
+  background: rgba(255,255,255,.97);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 4px 16px rgba(32, 58, 42, 0.05);
 }
 
-.public-page .brand-copy strong { color: var(--white); }
-.public-page .brand-copy small { color: rgba(255, 255, 255, 0.58); }
+.public-page .brand-copy strong { color: var(--ink); }
+.public-page .brand-copy small { color: var(--muted); }
 
 @media (max-width: 640px) {
   .public-page .site-header {
-    background:
-      radial-gradient(circle at 15% 5%, rgba(61, 102, 166, 0.42), transparent 32%),
-      linear-gradient(165deg, #172b50 0%, #0f1d38 48%, #081326 100%);
-    border-bottom-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 7px 24px rgba(6, 16, 34, 0.2);
+    background: rgba(255,255,255,.97);
+    border-bottom-color: var(--line);
+    box-shadow: 0 4px 16px rgba(32, 58, 42, 0.05);
   }
 }
 
