@@ -782,17 +782,17 @@ h1 em {
 .copy-button.copied { color: white; background: #23806f; border-color: #23806f; transform: scale(.94); }
 
 .copy-button svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.copy-button { width: auto; min-width: 30px; gap: 4px; padding: 0 8px; color: #277e50; background: rgba(255,255,255,.9); border-color: rgba(54,156,100,.28); font-size: 8px; font-weight: 700; }
+.copy-button { width: auto; min-width: 34px; height: 34px; gap: 5px; padding: 0 10px; color: #277e50; background: rgba(255,255,255,.9); border-color: rgba(54,156,100,.28); font-size: 10px; font-weight: 700; }
 .copy-button:hover { color: #fff; background: #369c64; border-color: #369c64; }
 
-.payment-account-note { display: flex; align-items: flex-start; gap: 7px; margin-top: 12px; padding: 9px 10px; color: #2d7048; background: rgba(255,255,255,.62); border: 1px solid rgba(54,156,100,.2); border-radius: 8px; font-size: 9px; font-weight: 600; line-height: 1.45; }
-.payment-account-note > span { display: grid; width: 16px; height: 16px; flex: 0 0 auto; place-items: center; color: #fff; background: #369c64; border-radius: 50%; font-size: 10px; }
-.payment-steps { display: grid; gap: 9px; margin: 14px 0 0; padding: 0; list-style: none; }
-.payment-steps li { display: grid; grid-template-columns: 26px 1fr; gap: 9px; align-items: center; }
-.payment-steps > li > span { display: grid; width: 26px; height: 26px; place-items: center; color: #2a8a53; background: rgba(255,255,255,.72); border: 1px solid rgba(54,156,100,.18); border-radius: 8px; font-size: 13px; font-weight: 800; }
+.payment-account-note { display: flex; align-items: flex-start; gap: 8px; margin-top: 14px; padding: 11px 12px; color: #2d7048; background: rgba(255,255,255,.62); border: 1px solid rgba(54,156,100,.2); border-radius: 9px; font-size: 11px; font-weight: 600; line-height: 1.5; }
+.payment-account-note > span { display: grid; width: 18px; height: 18px; flex: 0 0 auto; place-items: center; color: #fff; background: #369c64; border-radius: 50%; font-size: 11px; }
+.payment-steps { display: grid; gap: 11px; margin: 16px 0 0; padding: 0; list-style: none; }
+.payment-steps li { display: grid; grid-template-columns: 32px 1fr; gap: 10px; align-items: center; }
+.payment-steps > li > span { display: grid; width: 32px; height: 32px; place-items: center; color: #2a8a53; background: rgba(255,255,255,.72); border: 1px solid rgba(54,156,100,.18); border-radius: 9px; font-size: 16px; font-weight: 800; }
 .payment-steps p { display: flex; flex-direction: column; margin: 0; }
-.payment-steps strong { color: var(--ink); font-size: 9px; }
-.payment-steps small { margin-top: 1px; color: var(--muted); font-size: 8px; line-height: 1.35; }
+.payment-steps strong { color: var(--ink); font-size: 11px; }
+.payment-steps small { margin-top: 2px; color: var(--muted); font-size: 10px; line-height: 1.45; }
 
 .upload-field input {
   position: absolute;
