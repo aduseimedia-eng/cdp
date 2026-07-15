@@ -529,6 +529,72 @@ function updateRegistrationStatus(reference, status) {
   showToast(`Registration marked ${status.toLowerCase()}`);
 }
 
+const ADMIN_TOKEN_KEY = 'iodCdpAdminToken';
+
+async function apiRequest(path, options = {}) {
+  const token = sessionStorage.getItem(ADMIN_TOKEN_KEY);
+  const headers = { ...(options.headers || {}) };
+  if (token) headers.Authorization = `Bearer ${token}`;
+  if (options.body && !(options.body instanceof FormData)) headers['Content-Type'] = 'application/json';
+  const response = await fetch(path, { ...options, headers });
+  if (response.status === 401) logout();
+  if (!response.ok) throw new Error((await response.json().catch(() => ({}))).error || 'Request failed.');
+  return response.status === 204 ? null : response.json();
+}
+
+async function loadAdminData() {
+  [config, registrations] = await Promise.all([apiRequest('/api/config'), apiRequest('/api/admin/registrations')]);
+  config = { ...DEFAULT_CONFIG, ...config };
+  posterDataUrl = config.posterDataUrl || '';
+  populateForms();
+  updateDashboard();
+}
+
+handleLogin = async function(event) {
+  event.preventDefault();
+  const error = document.querySelector('#loginError');
+  const button = document.querySelector('#loginButton');
+  button.disabled = true; error.textContent = '';
+  try {
+    const response = await fetch('/api/admin/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password: document.querySelector('#adminPassword').value }) });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error || 'Could not sign in.');
+    sessionStorage.setItem(ADMIN_TOKEN_KEY, result.token);
+    await loadAdminData();
+    revealDashboard();
+  } catch (error) { error && (document.querySelector('#loginError').textContent = error.message); }
+  finally { button.disabled = false; }
+};
+
+logout = function() { sessionStorage.removeItem(ADMIN_TOKEN_KEY); sessionStorage.removeItem(AUTH_SESSION_KEY); revealLogin(); };
+
+saveAll = async function() {
+  try { collectConfig(); config = await apiRequest('/api/config', { method: 'PUT', body: JSON.stringify(config) }); updateDashboard(); showToast('Changes saved and published.'); }
+  catch (error) { showToast(error.message || 'Could not save changes.'); }
+};
+
+changeAdminPassword = async function(event) {
+  event.preventDefault();
+  const message = document.querySelector('#passwordChangeMessage');
+  const newPassword = document.querySelector('#newAdminPassword').value;
+  if (newPassword !== document.querySelector('#confirmAdminPassword').value) { message.textContent = 'The new passwords do not match.'; return; }
+  try {
+    await apiRequest('/api/admin/password', { method: 'PUT', body: JSON.stringify({ currentPassword: document.querySelector('#currentAdminPassword').value, newPassword }) });
+    event.currentTarget.reset(); message.className = 'password-change-message success'; message.textContent = 'Password updated.';
+  } catch (error) { message.className = 'password-change-message'; message.textContent = error.message; }
+};
+
+confirmRegistrationDeletion = async function() {
+  if (!pendingDeletion) return;
+  try { await apiRequest(`/api/admin/registrations/${encodeURIComponent(pendingDeletion)}`, { method: 'DELETE' }); registrations = registrations.filter((item) => item.reference !== pendingDeletion); closeDeleteModal(); updateDashboard(); showToast('Registration deleted.'); }
+  catch (error) { showToast(error.message || 'Could not delete registration.'); }
+};
+
+updateRegistrationStatus = async function(reference, status) {
+  try { await apiRequest(`/api/admin/registrations/${encodeURIComponent(reference)}`, { method: 'PATCH', body: JSON.stringify({ status }) }); const registration = registrations.find((item) => item.reference === reference); if (registration) registration.status = status; updateDashboard(); showToast(`Registration marked ${status.toLowerCase()}.`); }
+  catch (error) { showToast(error.message || 'Could not update registration.'); }
+};
+
 function csvCell(value) {
   return `"${String(value ?? '').replaceAll('"', '""')}"`;
 }
@@ -618,4 +684,3 @@ window.addEventListener('storage', (event) => {
 
 populateForms();
 updateDashboard();
-if (sessionStorage.getItem(AUTH_SESSION_KEY) === 'true') revealDashboard();

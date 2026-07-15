@@ -1,6 +1,10 @@
-FROM nginx:1.27-alpine
+FROM node:22-alpine
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY . /usr/share/nginx/html
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --omit=dev
+COPY . .
 
+ENV NODE_ENV=production
 EXPOSE 8080
+CMD ["node", "server.js"]

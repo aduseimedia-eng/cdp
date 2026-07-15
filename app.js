@@ -336,6 +336,17 @@ function loadConfig() {
   }
 }
 
+async function refreshConfig() {
+  try {
+    const response = await fetch('/api/config');
+    if (!response.ok) throw new Error('Could not load programme settings.');
+    localStorage.setItem(CONFIG_KEY, JSON.stringify(await response.json()));
+    applyPublicConfig();
+  } catch {
+    showToast('Could not load the latest programme settings.');
+  }
+}
+
 function setText(selector, value) {
   const element = document.querySelector(selector);
   if (element) element.textContent = value;
@@ -440,13 +451,13 @@ function applyPublicConfig() {
 }
 
 function storeRegistration(registration) {
-  try {
-    const registrations = JSON.parse(localStorage.getItem(REGISTRATIONS_KEY)) || [];
-    registrations.unshift(registration);
-    localStorage.setItem(REGISTRATIONS_KEY, JSON.stringify(registrations));
-  } catch {
-    showToast('Registration received, but this browser could not save a local copy.');
-  }
+  const data = new FormData(form);
+  data.append('reference', registration.reference);
+  fetch('/api/registrations', { method: 'POST', body: data })
+    .then(async (response) => {
+      if (!response.ok) throw new Error((await response.json()).error || 'Could not save your registration.');
+    })
+    .catch((error) => showToast(error.message || 'Could not save your registration.'));
 }
 
 form.elements.network.addEventListener('change', (event) => {
@@ -519,6 +530,7 @@ document.querySelectorAll('.accordion details').forEach((detail) => {
 const yearElement = document.querySelector('#year');
 if (yearElement) yearElement.textContent = new Date().getFullYear();
 applyPublicConfig();
+refreshConfig();
 restoreRegistrationDraft();
 window.addEventListener('storage', (event) => {
   if (event.key === CONFIG_KEY) applyPublicConfig();
