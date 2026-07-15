@@ -482,6 +482,15 @@ function renderRegistrations(searchTerm = '') {
 
     const actions = document.createElement('td');
     actions.dataset.label = 'Actions';
+    if (item.receiptName) {
+      const receiptButton = document.createElement('button');
+      receiptButton.className = 'view-receipt-button';
+      receiptButton.type = 'button';
+      receiptButton.textContent = 'View receipt';
+      receiptButton.setAttribute('aria-label', `View payment receipt for ${displayName(item)}`);
+      receiptButton.addEventListener('click', () => viewReceipt(item.reference));
+      actions.append(receiptButton);
+    }
     const deleteButton = document.createElement('button');
     deleteButton.className = 'delete-registration-button';
     deleteButton.type = 'button';
@@ -500,6 +509,19 @@ function deleteRegistration(reference, participantName) {
   document.querySelector('#deleteParticipantName').textContent = participantName;
   document.querySelector('#deleteModal').hidden = false;
   document.querySelector('#cancelDeleteButton').focus();
+}
+
+async function viewReceipt(reference) {
+  const token = sessionStorage.getItem(ADMIN_TOKEN_KEY);
+  try {
+    const response = await fetch(`/api/admin/registrations/${encodeURIComponent(reference)}/receipt`, { headers: { Authorization: `Bearer ${token}` } });
+    if (!response.ok) throw new Error('Could not load this receipt.');
+    const url = URL.createObjectURL(await response.blob());
+    window.open(url, '_blank', 'noopener');
+    window.setTimeout(() => URL.revokeObjectURL(url), 60000);
+  } catch (error) {
+    showToast(error.message || 'Could not load this receipt.');
+  }
 }
 
 function closeDeleteModal() {

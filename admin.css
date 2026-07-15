@@ -211,6 +211,8 @@ tbody tr:last-child td { border-bottom: 0; }
 .status-select.verified { color: #247465; background: var(--teal-soft); border-color: #bce8e0; }
 .delete-registration-button { min-height: 30px; padding: 0 9px; color: var(--danger); background: #fff1ef; border: 1px solid #f3d4cf; border-radius: 7px; font-size: 8px; font-weight: 700; cursor: pointer; }
 .delete-registration-button:hover { color: white; background: var(--danger); border-color: var(--danger); }
+.view-receipt-button { min-height: 30px; margin-right: 6px; padding: 0 9px; color: #247465; background: var(--teal-soft); border: 1px solid #bce8e0; border-radius: 7px; font-size: 8px; font-weight: 700; cursor: pointer; }
+.view-receipt-button:hover { color: white; background: #247465; border-color: #247465; }
 .empty-table { height: 180px; color: var(--muted); text-align: center; }
 
 .admin-toast { position: fixed; right: 22px; bottom: 22px; z-index: 20; padding: 11px 16px; color: white; background: var(--navy); border-radius: 8px; box-shadow: var(--shadow); font-size: 9px; opacity: 0; transform: translateY(12px); pointer-events: none; transition: .2s; }
@@ -344,6 +346,7 @@ td { font-size: 11px; }
 .reference-text { font-size: 9px; }
 .status-select { height: 33px; font-size: 10px; }
 .delete-registration-button { min-height: 33px; font-size: 10px; }
+.view-receipt-button { min-height: 33px; font-size: 10px; }
 .admin-toast { font-size: 11px; }
 .delete-dialog p { font-size: 12px; }
 .delete-dialog-actions button { font-size: 11px; }
@@ -436,6 +439,7 @@ td { font-size: 11px; }
   .table-wrap .participant-cell small,
   .table-wrap .reference-text { margin-top: 1px; font-size: 11px; line-height: 1.45; }
   .table-wrap .status-select,
+  .table-wrap .view-receipt-button,
   .table-wrap .delete-registration-button { justify-self: start; }
   .table-wrap .empty-table { display: block; height: auto; padding: 34px 18px; border-bottom: 0; font-size: 12px; text-align: center; }
   .table-wrap .empty-table::before { content: none; }
