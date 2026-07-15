@@ -74,7 +74,6 @@ app.put('/api/admin/password', adminOnly, async (req, res, next) => { try {
   if (!stored.rowCount || !await passwordMatches(current, stored.rows[0].password_hash)) return res.status(401).json({ error: 'Current password is incorrect.' });
   await pool.query('UPDATE admin_credentials SET password_hash = $1 WHERE id = TRUE', [await hashPassword(nextPassword)]); res.status(204).end();
 } catch (e) { next(e); } });
-});
 app.get('/api/admin/registrations', adminOnly, async (_req, res, next) => { try {
   const { rows } = await pool.query(`SELECT reference, title, first_name AS "firstName", last_name AS "lastName", email, organization, whatsapp, role, network, bank_account_id AS "bankAccountId", payment_provider AS "paymentProvider", payment_phone AS "paymentPhone", transaction_id AS "transactionId", receipt_name AS "receiptName", status, submitted_at AS "submittedAt" FROM registrations ORDER BY submitted_at DESC`); res.json(rows);
 } catch (e) { next(e); } });
