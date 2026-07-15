@@ -1,20 +1,20 @@
 :root {
-  --navy: #14213d;
-  --navy-deep: #0d172c;
-  --navy-soft: #253452;
-  --page: #f3f4f6;
+  --navy: #1d3426;
+  --navy-deep: #14271b;
+  --navy-soft: #365642;
+  --page: #f5f8f5;
   --white: #fff;
-  --ink: #17233b;
-  --muted: #737c8f;
-  --line: #e2e5ea;
-  --coral: #ff7a59;
-  --coral-soft: #fff0eb;
-  --teal: #58d6c3;
-  --teal-soft: #ddf8f3;
+  --ink: #17261c;
+  --muted: #6f7b73;
+  --line: #e0e7e1;
+  --coral: #369c64;
+  --coral-soft: #eaf7ee;
+  --teal: #5bbf83;
+  --teal-soft: #e4f6e9;
   --amber: #f0b44d;
   --amber-soft: #fff5dd;
   --danger: #c64138;
-  --shadow: 0 16px 45px rgba(15, 25, 48, .08);
+  --shadow: 0 16px 45px rgba(21, 50, 32, .08);
 }
 
 * { box-sizing: border-box; }
@@ -214,6 +214,16 @@ tbody tr:last-child td { border-bottom: 0; }
 .delete-registration-button:hover { color: white; background: var(--danger); border-color: var(--danger); }
 .view-receipt-button { min-height: 30px; margin-right: 6px; padding: 0 9px; color: #247465; background: var(--teal-soft); border: 1px solid #bce8e0; border-radius: 7px; font-size: 8px; font-weight: 700; cursor: pointer; }
 .view-receipt-button:hover { color: white; background: #247465; border-color: #247465; }
+
+/* Consistent green treatment for admin actions and navigation. */
+.login-screen, .admin-header { background: linear-gradient(145deg, #24533a 0%, #173b29 58%, #102b1d 100%); }
+.login-button, .upload-button, .change-password-button, .table-tools button { background: #369c64; box-shadow: 0 9px 22px rgba(54,156,100,.2); }
+.login-button:hover, .upload-button:hover, .change-password-button:hover, .table-tools button:hover { background: #277e50; }
+.primary-button { background: linear-gradient(135deg, #50b778, #369c64); box-shadow: 0 9px 22px rgba(39,126,80,.25); }
+.primary-button:hover { background: linear-gradient(135deg, #63c889, #3da76a); }
+.nav-item.active { background: linear-gradient(135deg, rgba(80,183,120,.25), rgba(54,156,100,.14)); border-color: rgba(126,211,158,.2); box-shadow: inset 3px 0 0 #62bd85, 0 7px 18px rgba(10,35,20,.12); }
+.nav-item.active > span, .text-action, .add-bank-button { color: #369c64; }
+.text-action:hover { color: #277e50; }
 .empty-table { height: 180px; color: var(--muted); text-align: center; }
 
 .admin-toast { position: fixed; right: 22px; bottom: 22px; z-index: 20; padding: 11px 16px; color: white; background: var(--navy); border-radius: 8px; box-shadow: var(--shadow); font-size: 9px; opacity: 0; transform: translateY(12px); pointer-events: none; transition: .2s; }

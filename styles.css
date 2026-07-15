@@ -1612,6 +1612,13 @@ footer p { font-size: 10px; }
   .brand-copy small { font-size: 7px; }
 }
 
+/* Green palette for the focused registration flow. */
+.registration-only-page .site-header,
+.registration-only-section { background: linear-gradient(145deg, #24533a 0%, #173b29 58%, #102b1d 100%); }
+.registration-only-page .form-card-head { background: linear-gradient(145deg, #24533a 0%, #173b29 62%, #102b1d 100%); }
+.registration-only-page .form-card-head .step-label,
+.registration-only-page .form-progress span.active { color: #9ce0b5; background: #62bd85; }
+
 /* Touch-friendly mobile selection sheet for registration dropdowns. */
 body.selection-sheet-open { overflow: hidden; }
 
